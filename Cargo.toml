@@ -1,0 +1,21 @@
+[package]
+name = "sass-rs"
+version = "0.0.1"
+authors = ["Marius Seritan <mseritan@linkedin.com>"]
+keywords = ["sass", "ffi"]
+description = "Higher level binding for the Sass library"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/compass-rs/sass-rs.git"
+homepage = "https://github.com/compass-rs/sass-rs"
+
+[lib]
+name = "sass-rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[dependencies.sass-sys]
+git = "https://github.com/compass-rs/sass-sys.git"
