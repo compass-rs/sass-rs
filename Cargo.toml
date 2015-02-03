@@ -14,8 +14,9 @@ name = "sass-rs"
 path = "src/lib.rs"
 
 [[bin]]
-name = "main"
+name = "sass-rs"
 path = "src/main.rs"
 
 [dependencies.sass-sys]
 git = "https://github.com/compass-rs/sass-sys.git"
+# path = "../sass-sys"
