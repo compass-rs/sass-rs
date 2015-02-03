@@ -17,6 +17,5 @@ path = "src/lib.rs"
 name = "sass-rs"
 path = "src/main.rs"
 
-[dependencies.sass-sys]
-git = "https://github.com/compass-rs/sass-sys.git"
-# path = "../sass-sys"
+[dependencies]
+sass-sys = "0.0.1"
