@@ -2,9 +2,10 @@
 #![feature(os)]
 #![feature(core)]
 extern crate "sass-rs" as sass_rs;
+use sass_rs::sass_context::SassFileContext;
 
 fn compile(filename:&str) {
-  let mut file_context = sass_rs::SassFileContext::new(filename);
+  let mut file_context = SassFileContext::new(filename);
   let out = file_context.compile();
   match out {
     Ok(css) => println!("------- css  ------\n{}\n--------", css),
