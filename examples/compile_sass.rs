@@ -1,5 +1,4 @@
 #![feature(env)]
-#![feature(os)]
 #![feature(core)]
 extern crate "sass-rs" as sass_rs;
 use sass_rs::sass_context::SassFileContext;
@@ -16,7 +15,7 @@ fn compile(filename:&str) {
 pub fn main() {
   let mut args = std::env::args();
   let _ = args.next();
-  let file = args.next().expect("Please pass in a file name").into_string().unwrap();
+  let file = args.next().expect("Please pass in a file name");
   println!("Compiling sass file: `{}`.", file);
   compile(file.as_slice());
 }

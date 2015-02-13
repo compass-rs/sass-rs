@@ -10,6 +10,7 @@ mod util;
 
 pub mod sass_context;
 pub mod sass_importer;
+pub mod sass_value;
 
 
 
