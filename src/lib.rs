@@ -2,15 +2,19 @@
 #![feature(std_misc)]
 #![feature(libc)]
 #![feature(collections)]
+#![feature(core)]
+
 
 
 extern crate "sass-sys" as sass_sys;
+extern crate core;
 extern crate libc;
 mod util;
 
 pub mod sass_context;
 pub mod sass_importer;
 pub mod sass_value;
+pub mod sass_function;
 
 
 

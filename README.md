@@ -11,6 +11,7 @@ sass2scss: 1.0.3
 ```
 
 
+The example below expands sass variables and calls custom functions defined in Rust.
 
 ```
 cargo run --example compile_sass examples/simple.scss
@@ -19,8 +20,8 @@ Running `target/examples/compile_sass examples/simple.scss`
 Compiling sass file: `examples/simple.scss`.
 ------- css  ------
 body {
-font: 100% Helvetica, sans-serif;
-color: #333; }
-
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+  content: foo-ed; }
 --------
 ```

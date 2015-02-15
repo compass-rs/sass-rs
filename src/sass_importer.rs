@@ -1,3 +1,6 @@
+//! Wraps the sass importer interface:
+//! https://github.com/sass/libsass/wiki/API-Sass-Importer
+
 use sass_sys;
 
 /// Wrap a Sass Import Callback to control the lifecycle.
