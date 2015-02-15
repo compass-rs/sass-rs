@@ -1,4 +1,8 @@
-Wrapper library for low level sass-sys.
+Wrapper library for low level sass-sys
+https://github.com/compass-rs/sass-sys
+
+The sass-sys library wraps libsass
+https://github.com/sass/libsass
 
 This is work in progress. To test that it works run the examples
 
