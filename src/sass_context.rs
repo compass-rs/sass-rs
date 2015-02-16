@@ -18,7 +18,7 @@ impl SassOptions {
     unsafe {
       let fn_list: sass_sys::Sass_C_Function_List = sass_sys::sass_make_function_list(len);
       for (i,item) in sf.iter().enumerate() {
-        sass_sys::sass_function_set_list_entry(fn_list, i.to_u64().unwrap(), item.callback());
+        sass_sys::sass_function_set_list_entry(fn_list, i.to_u64().unwrap(), item.c_callback);
       }
       sass_sys::sass_option_set_c_functions(self.raw, fn_list);
     }

@@ -7,13 +7,15 @@ use sass_rs::sass_context::SassFileContext;
 use sass_rs::sass_function::*;
 use sass_rs::sass_value::*;
 
-fn foo(_: * const SassValueRaw) -> * mut SassValueRaw {
-  SassValue::raw_from_str("foo-ed")
+fn foo(input: * const SassValueRaw) -> * mut SassValueRaw {
+  let value = SassValue::from_raw(input);
+  let out = format!("Called with {}", value);
+  SassValue::raw_from_str(out.as_slice())
 }
 
 fn compile(filename:&str) {
   let mut file_context = SassFileContext::new(filename);
-  let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo()"),(foo as SassFunction))];
+  let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo($x)"),(foo as SassFunction))];
   file_context.sass_context.sass_options.set_sass_functions(fns);
   let out = file_context.compile();
   match out {
