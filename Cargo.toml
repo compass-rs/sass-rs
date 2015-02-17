@@ -1,6 +1,6 @@
 [package]
 name = "sass-rs"
-version = "0.0.3"
+version = "0.0.4"
 authors = ["Marius Seritan <github@seritan.net>"]
 keywords = ["sass", "ffi"]
 description = "Higher level binding for the Sass library"
@@ -14,4 +14,4 @@ name = "sass-rs"
 path = "src/lib.rs"
 
 [dependencies]
-sass-sys = "0.0.4"
+sass-sys = "0.0.3"
