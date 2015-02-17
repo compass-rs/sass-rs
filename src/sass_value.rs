@@ -50,14 +50,18 @@ impl SassValue {
 impl fmt::Display for SassValue {
 
   fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+    //! Format arbitrary Sass Values
+
     fn fmt_list(value: * const SassValueRaw)  -> String {
       let len = unsafe { sass_sys::sass_list_get_length(value) };
       let mut out = String::new();
       out.push_str("[");
       for i in 0..len {
         let entry = unsafe {sass_sys::sass_list_get_value(value,i)};
+        if i>0 {
+          out.push_str(", ");
+        }
         out.push_str(fmt_raw(entry).as_slice());
-        out.push_str(" ");
       }
       out.push_str("]");
       out
@@ -67,9 +71,30 @@ impl fmt::Display for SassValue {
       let sass_tag = unsafe {sass_sys::sass_value_get_tag(value)};
       match sass_tag {
         sass_sys::SASS_LIST =>  fmt_list(value),
-        sass_sys::SASS_STRING => util::build_string(unsafe{sass_sys::sass_string_get_value(value)}),
-        _ => format!("sass tag {}",sass_tag)
-
+        sass_sys::SASS_STRING => util::build_string(
+          unsafe{sass_sys::sass_string_get_value(value)}),
+        sass_sys::SASS_BOOLEAN => {
+          let v = unsafe{ sass_sys::sass_boolean_get_value(value) };
+          if v != 0 {
+            String::from_str("true")
+          } else {
+            String::from_str("false")
+          }
+        },
+        sass_sys::SASS_NUMBER => {
+          let v = unsafe { sass_sys::sass_number_get_value(value)};
+          format!("{}",v)
+        },
+        sass_sys::SASS_COLOR => {String::from_str("color(?,?,?,?)")},
+        sass_sys::SASS_MAP => {String::from_str("{?,?}")},
+        sass_sys::SASS_NULL => String::from_str("(null)"),
+        sass_sys::SASS_ERROR => util::build_string(
+          unsafe {sass_sys::sass_error_get_message(value)}
+          ),
+        sass_sys::SASS_WARNING => util::build_string(
+          unsafe {sass_sys::sass_error_get_message(value)}
+          ),
+        _ => format!("bad sass tag {}", sass_tag)
       }
     }
 
