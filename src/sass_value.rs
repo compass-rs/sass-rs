@@ -26,7 +26,7 @@ impl SassValue {
     //! We will own and delete this value, although it is unclear
     //! if this is a real use case.
     SassValue {
-      value: SassValue::raw_from_str(input),
+      value: sass_string_from_str(input),
       owned: true
     }
   }
@@ -40,10 +40,25 @@ impl SassValue {
     }
   }
 
-  pub fn raw_from_str(input:&str) -> *mut SassValueRaw {
-    //! Create a raw Sass Value to return to libsass.
-    let c_str = ffi::CString::from_slice(input.as_bytes());
-    unsafe { sass_sys::sass_make_string(c_str.as_ptr()) }
+}
+
+pub fn sass_string_from_str(input:&str) -> *mut SassValueRaw {
+  //! Create a raw Sass Value to return to libsass.
+  let c_str = ffi::CString::from_slice(input.as_bytes());
+  unsafe { sass_sys::sass_make_string(c_str.as_ptr()) }
+}
+
+pub fn sass_error_from_str(input:&str) -> *mut SassValueRaw {
+  //! Create a raw Sass Value to return to libsass.
+  let c_str = ffi::CString::from_slice(input.as_bytes());
+  unsafe { sass_sys::sass_make_error(c_str.as_ptr()) }
+}
+
+pub fn sass_value_to_string(input: * const SassValueRaw) -> Option<String> {
+  if unsafe{sass_sys::sass_value_is_string(input)} != 0 {
+    Some(util::build_string(unsafe{sass_sys::sass_string_get_value(input)}))
+  } else {
+    None
   }
 }
 

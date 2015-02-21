@@ -10,7 +10,7 @@ use sass_rs::sass_value::*;
 fn foo(input: * const SassValueRaw) -> * mut SassValueRaw {
   let value = SassValue::from_raw(input);
   let out = format!("Called with {}", value);
-  SassValue::raw_from_str(out.as_slice())
+  sass_string_from_str(&out)
 }
 
 fn compile(filename:&str) {
