@@ -9,7 +9,6 @@ use std::ffi;
 use std::mem;
 
 /// Type of the function to be defined by the user.
-/// TODO: how are multiple arguments passed in?
 pub type SassFunction = fn(*const SassValueRaw)->*mut SassValueRaw;
 
 /// Dispatcher function called from libsass (C interface).
@@ -22,7 +21,7 @@ extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
 
 }
 
-/// Associate the signature with the C callback.
+/// Associate the signature with the C callback.$one,$two
 pub struct SassFunctionCallback {
   pub signature: String,
   pub c_callback:sass_sys::Sass_C_Function_Callback
@@ -31,7 +30,7 @@ pub struct SassFunctionCallback {
 
 impl SassFunctionCallback {
   pub fn from_sig_fn(signature:String,_fn:SassFunction) -> SassFunctionCallback {
-    let c_sig = ffi::CString::from_slice(signature.as_bytes());
+    let c_sig = ffi::CString::new(signature.as_slice()).unwrap();
     let _fn_c = unsafe {sass_sys::sass_make_function(c_sig.as_ptr(), Some(dispatch), mem::transmute(_fn))};
     SassFunctionCallback {
       signature: signature,

@@ -39,7 +39,7 @@ pub struct SassFileContext {
 
 impl SassFileContext {
   pub fn new(input_file_path:&str) -> SassFileContext {
-    let c_str = ffi::CString::from_slice(input_file_path.as_bytes());
+    let c_str = ffi::CString::new(input_file_path).unwrap();
     let file_context = unsafe { sass_sys::sass_make_file_context(c_str.as_ptr()) };
     let file_sass_context = unsafe {sass_sys::sass_file_context_get_context(file_context)};
     let options = unsafe {sass_sys::sass_context_get_options(file_sass_context)};
