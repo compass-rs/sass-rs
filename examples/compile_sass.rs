@@ -7,10 +7,9 @@ use sass_rs::sass_context::SassFileContext;
 use sass_rs::sass_function::*;
 use sass_rs::sass_value::*;
 
-fn foo(input: * const SassValueRaw) -> * mut SassValueRaw {
-  let value = SassValue::from_raw(input);
+fn foo(value:& SassValueBuf) -> SassValueBuf {
   let out = format!("Called with {}", value);
-  sass_string_from_str(&out)
+  SassValueBuf::sass_string(&out)
 }
 
 fn compile(filename:&str) {

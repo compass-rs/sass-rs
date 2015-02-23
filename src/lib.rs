@@ -10,6 +10,7 @@ extern crate "sass-sys" as sass_sys;
 extern crate core;
 extern crate libc;
 mod util;
+mod raw;
 
 pub mod sass_context;
 pub mod sass_importer;

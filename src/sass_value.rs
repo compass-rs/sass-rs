@@ -5,64 +5,63 @@ use sass_sys;
 use std::ffi;
 use std::fmt;
 use util;
+use raw::SassValueRaw;
 
-
-/// Alias the sass_sys type to a prettier name.
-pub type SassValueRaw = sass_sys::Union_Sass_Value;
-
-
-
-/// Safe container of Union_Sass_Value
-/// The allocation crosses the lines to libsass.
-pub struct SassValue {
-    value: * const SassValueRaw,
-    owned: bool
+/// Wrap a raw sass value.
+pub struct SassValueBuf {
+  raw: * mut SassValueRaw,
+  is_const: bool
 }
 
-
-impl SassValue {
-  pub fn from_str(input:&str) -> SassValue {
-    //! Create a Sass Value from a string.
-    //! We will own and delete this value, although it is unclear
-    //! if this is a real use case.
-    SassValue {
-      value: sass_string_from_str(input),
-      owned: true
+impl SassValueBuf {
+  // Wrap a read only Sass Value pointer coming from libsass.
+  pub fn from_raw(raw: *const SassValueRaw) -> SassValueBuf {
+    SassValueBuf {
+      raw: raw as *mut SassValueRaw,
+      is_const: true
     }
   }
 
-  pub fn from_raw(raw: *const SassValueRaw) -> SassValue {
-    //! Wrap a const Sass Value pointer coming from libsass.
-    //! We won't need to delete this.
-    SassValue {
-      value: raw,
-      owned: false
+  /// Create a raw SassValueBuf containing a sass string.
+  pub fn sass_string(input:&str) -> SassValueBuf {
+    let c_str = ffi::CString::new(input).unwrap();
+    SassValueBuf {
+      raw: unsafe { sass_sys::sass_make_string(c_str.as_ptr()) },
+      is_const: false
+    }
+  }
+
+  /// Create a raw SassValueBuf containing a sass string.
+  pub fn sass_error(input:&str) -> SassValueBuf {
+    let c_str = ffi::CString::new(input).unwrap();
+    SassValueBuf {
+      raw: unsafe { sass_sys::sass_make_error(c_str.as_ptr()) },
+      is_const: false
+    }
+  }
+
+  /// return a mutable raw, if available.
+  pub fn raw(&self) -> Option<* mut SassValueRaw> {
+    if self.is_const {
+      None
+    } else {
+      Some(self.raw)
+    }
+  }
+
+
+  /// Attempt to extract a String from the raw value.
+  pub fn as_string(&self) -> Option<String> {
+    if unsafe{sass_sys::sass_value_is_string(self.raw)} != 0 {
+      Some(util::build_string(unsafe{sass_sys::sass_string_get_value(self.raw)}))
+    } else {
+      None
     }
   }
 
 }
 
-pub fn sass_string_from_str(input:&str) -> *mut SassValueRaw {
-  //! Create a raw Sass Value to return to libsass.
-  let c_str = ffi::CString::new(input).unwrap();
-  unsafe { sass_sys::sass_make_string(c_str.as_ptr()) }
-}
-
-pub fn sass_error_from_str(input:&str) -> *mut SassValueRaw {
-  //! Create a raw Sass Value to return to libsass.
-  let c_str = ffi::CString::new(input).unwrap();
-  unsafe { sass_sys::sass_make_error(c_str.as_ptr()) }
-}
-
-  pub fn sass_value_to_string(input: * const SassValueRaw) -> Option<String> {
-  if unsafe{sass_sys::sass_value_is_string(input)} != 0 {
-    Some(util::build_string(unsafe{sass_sys::sass_string_get_value(input)}))
-  } else {
-    None
-  }
-}
-
-impl fmt::Display for SassValue {
+impl fmt::Display for SassValueBuf {
 
   fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
     //! Format arbitrary Sass Values
@@ -113,20 +112,31 @@ impl fmt::Display for SassValue {
       }
     }
 
-    fmt.pad_integral(true, "", fmt_raw(self.value).as_slice())
-
-
-
+    fmt.pad_integral(true, "", fmt_raw(self.raw).as_slice())
 
   }
 }
 
+
+/// An owned SassValueBuf.
+pub struct SassValue {
+  buf: * mut SassValueBuf
+}
+
+
+impl SassValue {
+  pub fn from_buf(input:&mut SassValueBuf) -> SassValue {
+    SassValue {
+      buf: input
+    }
+  }
+}
+
+
 impl Drop for SassValue {
   fn drop(&mut self) {
-    if self.owned {
-      unsafe {
-        sass_sys::sass_delete_value(self.value as *mut SassValueRaw)
-      }
+    unsafe {
+      sass_sys::sass_delete_value(self.buf as *mut SassValueRaw)
     }
   }
 }

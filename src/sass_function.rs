@@ -2,14 +2,14 @@
 //! https://github.com/sass/libsass/wiki/Custom-Functions-internal
 
 
-use sass_value::SassValueRaw;
+use sass_value::SassValueBuf;
 use sass_sys;
 use libc;
 use std::ffi;
 use std::mem;
 
 /// Type of the function to be defined by the user.
-pub type SassFunction = fn(*const SassValueRaw)->*mut SassValueRaw;
+pub type SassFunction = fn(& SassValueBuf)->SassValueBuf;
 
 /// Dispatcher function called from libsass (C interface).
 /// The cookie argument is setup in SassFunctionCallback::from_sig_fn.
@@ -17,7 +17,11 @@ pub type SassFunction = fn(*const SassValueRaw)->*mut SassValueRaw;
 extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
   cookie: *mut ::libc::c_void) -> *mut sass_sys::Union_Sass_Value {
     let _fn :SassFunction = unsafe {mem::transmute(cookie)};
-    _fn(arg1)
+    let result = _fn(&SassValueBuf::from_raw(arg1)).raw();
+    match result {
+      Some(raw) => raw,
+      None => SassValueBuf::sass_error("bad call").raw().unwrap()
+    }
 
 }
 
