@@ -26,6 +26,7 @@ extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
 }
 
 /// Associate the signature with the C callback.$one,$two
+#[derive(Debug)]
 pub struct SassFunctionCallback {
     pub signature: String,
     pub c_callback:sass_sys::Sass_C_Function_Callback
