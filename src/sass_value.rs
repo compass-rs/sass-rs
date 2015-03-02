@@ -22,7 +22,7 @@ impl SassValue {
         }
     }
 
-  /// Create a raw SassValueBuf containing a sass string.
+    /// Create a raw SassValue containing a sass string.
     pub fn sass_string(input:&str) -> SassValue {
         let c_str = ffi::CString::new(input).unwrap();
         SassValue {
@@ -31,7 +31,7 @@ impl SassValue {
         }
     }
 
-  /// Create a raw SassValueBuf containing a sass string.
+    /// Create a raw SassValue containing a sass string.
     pub fn sass_error(input:&str) -> SassValue {
         let c_str = ffi::CString::new(input).unwrap();
         SassValue {
@@ -58,6 +58,43 @@ impl SassValue {
             None
         }
     }
+
+
+    /// Attempt to extract a vector of strings from the raw value.
+    pub fn to_vec_string(&self) -> Option<Vec<String>> {
+        if unsafe{sass_sys::sass_value_is_list(self.raw)} != 0 {
+            let mut out = Vec::new();
+            for i in 0..unsafe{sass_sys::sass_list_get_length(self.raw)} {
+                let one = unsafe{sass_sys::sass_list_get_value(self.raw,i)};
+                if unsafe{sass_sys::sass_value_is_string(one)} != 0 {
+                    out.push(util::build_string(unsafe{sass_sys::sass_string_get_value(one)}));
+                }
+            }
+            Some(out)
+        } else {
+            None
+        }
+    }
+
+    /// Expect the SassValue to be a list and to contain a string,
+    /// at the desired index.
+    pub fn list_nth_to_string(&self,index:usize) -> Option<String> {
+        if unsafe{sass_sys::sass_value_is_list(self.raw)} != 0 {
+            if index >= unsafe{sass_sys::sass_list_get_length(self.raw) as usize} {
+                None
+            } else {
+                let one = unsafe{sass_sys::sass_list_get_value(self.raw,index as u64)};
+                if unsafe{sass_sys::sass_value_is_string(one)} != 0 {
+                    Some(util::build_string(unsafe{sass_sys::sass_string_get_value(one)}))
+                } else {
+                    None
+                }
+            }
+        } else {
+            None
+        }
+    }
+
 
 }
 

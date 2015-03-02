@@ -10,6 +10,7 @@ use std::mem;
 /// Type of the function to be defined by the user.
 pub type SassFunction = fn(& SassValue)->SassValue;
 
+
 /// Dispatcher function called from libsass (C interface).
 /// The cookie argument is setup in SassFunctionCallback::from_sig_fn.
 /// Note that the SassFunctionCallback is not used directly in the dispatch.
