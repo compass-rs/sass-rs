@@ -8,6 +8,8 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/compass-rs/sass-rs.git"
 homepage = "https://github.com/compass-rs/sass-rs"
+documentation = "http://compass-rs.github.io/sass-rs/"
+
 
 [lib]
 name = "sass-rs"

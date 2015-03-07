@@ -14,7 +14,7 @@ fn foo(value:& SassValue) -> SassValue {
 
 fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
-    let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo($x)"),(foo as SassFunction))];
+    let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo($x)"),foo)];
     file_context.sass_context.sass_options.set_sass_functions(fns);
     let out = file_context.compile();
     match out {

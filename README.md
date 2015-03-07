@@ -1,8 +1,10 @@
 Wrapper library for low level sass-sys
 https://github.com/compass-rs/sass-sys
 
-The sass-sys library wraps libsass
-https://github.com/sass/libsass
+[Travis build status:] (https://travis-ci.org/compass-rs/sass-rs) ![Travis build status]
+(https://travis-ci.org/compass-rs/sass-rs.svg?branch=master)
+
+Documentation: http://compass-rs.github.io/sass-rs/
 
 This is work in progress. To test that it works run the examples
 
