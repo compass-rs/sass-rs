@@ -1,17 +1,18 @@
-#![feature(env)]
-#![feature(core)]
-#![feature(collections)]
+#![feature(core,collections)]
+/// Example file on how to compile a scss file.
 
 extern crate "sass-rs" as sass_rs;
 use sass_rs::sass_context::SassFileContext;
 use sass_rs::sass_function::*;
 use sass_rs::sass_value::*;
 
+/// Function to be exported to libsass.
 fn foo(value:& SassValue) -> SassValue {
     let out = format!("Called with {}", value);
     SassValue::sass_string(&out)
 }
 
+/// Setup the environment and compile a file.
 fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
     let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo($x)"),foo)];

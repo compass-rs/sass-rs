@@ -1,8 +1,5 @@
 #![crate_type = "lib"]
-#![feature(std_misc)]
-#![feature(libc)]
-#![feature(collections)]
-#![feature(core)]
+#![feature(libc,collections,core)]
 
 
 
