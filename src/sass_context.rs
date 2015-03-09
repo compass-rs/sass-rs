@@ -13,7 +13,7 @@ pub struct SassOptions {
 
 impl SassOptions {
     /// Set the sass functions in the context so that they are available to libsass.
-    pub fn set_sass_functions(&mut self, sf:Vec<SassFunctionCallback>) {
+    pub fn set_sass_functions_from_callbacs(&mut self, sf:Vec<SassFunctionCallback>) {
         // create list of all custom functions
         let len:u64 = sf.len().to_u64().unwrap();
         unsafe {
@@ -25,6 +25,20 @@ impl SassOptions {
         }
     }
 
+    /// Set the sass functions in the context, expects an array
+    /// of tuples, each tuple contains the signature and function pointer.
+    pub fn set_sass_functions(&mut self, sf:Vec<(&'static str,SassFunction)>) {
+        // create list of all custom functions
+        let len:u64 = sf.len().to_u64().unwrap();
+        unsafe {
+            let fn_list = sass_sys::sass_make_function_list(len);
+            for (i,item) in sf.iter().enumerate() {
+                let c_cb = SassFunctionCallback::make_sass_c_callback(item.0,item.1);
+                sass_sys::sass_function_set_list_entry(fn_list, i.to_u64().unwrap(), c_cb);
+            }
+            sass_sys::sass_option_set_c_functions(self.raw, fn_list);
+        }
+    }
 }
 
 pub struct SassContext {

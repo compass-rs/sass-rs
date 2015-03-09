@@ -1,5 +1,5 @@
-//! Allow user to define custom functions to be called from libsass.
-//! https://github.com/sass/libsass/wiki/Custom-Functions-internal
+/// Allow user to define custom functions to be called from libsass.
+/// https://github.com/sass/libsass/wiki/Custom-Functions-internal
 
 
 use sass_value::SassValue;
@@ -25,7 +25,7 @@ extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
 
 }
 
-/// Associate the signature with the C callback.$one,$two
+/// Associate the signature with the C callback.
 #[derive(Debug)]
 pub struct SassFunctionCallback {
     pub signature: String,
@@ -34,12 +34,18 @@ pub struct SassFunctionCallback {
 
 
 impl SassFunctionCallback {
+    /// Create the C callback structure used by libsass.
+    pub fn make_sass_c_callback(signature:&str,_fn:SassFunction) -> sass_sys::Sass_C_Function_Callback {
+        let c_sig = ffi::CString::new(signature).unwrap();
+        unsafe {sass_sys::sass_make_function(c_sig.as_ptr(), Some(dispatch), mem::transmute(_fn))}
+    }
+
+    /// Build a SassFunctionCallback.
     pub fn from_sig_fn(signature:String,_fn:SassFunction) -> SassFunctionCallback {
-        let c_sig = ffi::CString::new(signature.as_slice()).unwrap();
-        let _fn_c = unsafe {sass_sys::sass_make_function(c_sig.as_ptr(), Some(dispatch), mem::transmute(_fn))};
+        let cb = SassFunctionCallback::make_sass_c_callback(signature.as_slice(),_fn);
         SassFunctionCallback {
             signature: signature,
-            c_callback: _fn_c
+            c_callback: cb
         }
     }
 
