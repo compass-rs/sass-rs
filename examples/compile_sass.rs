@@ -1,4 +1,4 @@
-#![feature(core,collections)]
+#![feature(core)]
 /// Example file on how to compile a scss file.
 
 extern crate "sass-rs" as sass_rs;
@@ -15,7 +15,7 @@ fn foo(value:& SassValue) -> SassValue {
 /// Setup the environment and compile a file.
 fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
-    let fns = vec![SassFunctionCallback::from_sig_fn(String::from_str("foo($x)"),foo)];
+    let fns = vec![("foo($x)",foo as SassFunction)];
     file_context.sass_context.sass_options.set_sass_functions(fns);
     let out = file_context.compile();
     match out {
