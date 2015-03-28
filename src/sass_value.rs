@@ -112,7 +112,7 @@ impl fmt::Display for SassValue {
                 if i>0 {
                     out.push_str(", ");
                 }
-                out.push_str(fmt_raw(entry).as_slice());
+                out.push_str(&fmt_raw(entry));
             }
             out.push_str("]");
             out
@@ -149,7 +149,7 @@ impl fmt::Display for SassValue {
             }
         }
 
-        fmt.pad_integral(true, "", fmt_raw(self.raw).as_slice())
+        fmt.pad_integral(true, "", &fmt_raw(self.raw))
 
     }
 }

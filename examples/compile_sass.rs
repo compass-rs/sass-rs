@@ -1,7 +1,6 @@
-#![feature(core)]
 /// Example file on how to compile a scss file.
 
-extern crate "sass-rs" as sass_rs;
+extern crate sass_rs;
 use sass_rs::sass_context::SassFileContext;
 use sass_rs::sass_function::*;
 use sass_rs::sass_value::*;
@@ -15,7 +14,7 @@ fn foo(value:& SassValue) -> SassValue {
 /// Setup the environment and compile a file.
 fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
-    let fns = vec![("foo($x)",foo as SassFunction)];
+    let fns:Vec<(&'static str,SassFunction)> = vec![("foo($x)",foo)];
     file_context.sass_context.sass_options.set_sass_functions(fns);
     let out = file_context.compile();
     match out {
@@ -29,5 +28,5 @@ pub fn main() {
     let _ = args.next();
     let file = args.next().expect("Please pass in a file name");
     println!("Compiling sass file: `{}`.", file);
-    compile(file.as_slice());
+    compile(&file);
 }

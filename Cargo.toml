@@ -1,5 +1,5 @@
 [package]
-name = "sass-rs"
+name = "sass_rs"
 version = "0.0.8"
 authors = ["Marius Seritan <github@seritan.net>"]
 keywords = ["sass", "ffi"]
@@ -12,8 +12,8 @@ documentation = "http://compass-rs.github.io/sass-rs/"
 
 
 [lib]
-name = "sass-rs"
+name = "sass_rs"
 path = "src/lib.rs"
 
 [dependencies]
-sass-sys = "0.0.7"
+sass-sys = "0.0.8"

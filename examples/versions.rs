@@ -1,4 +1,4 @@
-extern crate "sass-rs" as sass_rs;
+extern crate sass_rs;
 
 fn main() {
     println!("libsass: {}", sass_rs::libsass_version());

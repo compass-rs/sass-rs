@@ -42,7 +42,7 @@ impl SassFunctionCallback {
 
     /// Build a SassFunctionCallback.
     pub fn from_sig_fn(signature:String,_fn:SassFunction) -> SassFunctionCallback {
-        let cb = SassFunctionCallback::make_sass_c_callback(signature.as_slice(),_fn);
+        let cb = SassFunctionCallback::make_sass_c_callback(&signature,_fn);
         SassFunctionCallback {
             signature: signature,
             c_callback: cb

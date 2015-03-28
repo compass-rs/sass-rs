@@ -3,7 +3,7 @@
 
 
 
-extern crate "sass-sys" as sass_sys;
+extern crate sass_sys;
 extern crate core;
 extern crate libc;
 mod util;
