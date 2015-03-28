@@ -1,5 +1,5 @@
 [package]
-name = "sass_rs"
+name = "sass-rs"
 version = "0.0.9"
 authors = ["Marius Seritan <github@seritan.net>"]
 keywords = ["sass", "ffi"]
