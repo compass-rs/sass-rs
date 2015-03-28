@@ -1,6 +1,6 @@
 [package]
 name = "sass_rs"
-version = "0.0.8"
+version = "0.0.9"
 authors = ["Marius Seritan <github@seritan.net>"]
 keywords = ["sass", "ffi"]
 description = "Higher level binding for the Sass library"
