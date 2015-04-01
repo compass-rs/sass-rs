@@ -36,8 +36,16 @@ pub struct SassFunctionCallback {
 impl SassFunctionCallback {
     /// Create the C callback structure used by libsass.
     pub fn make_sass_c_callback(signature:&str,_fn:SassFunction) -> sass_sys::Sass_C_Function_Callback {
-        let c_sig = ffi::CString::new(signature).unwrap();
-        unsafe {sass_sys::sass_make_function(c_sig.as_ptr(), Some(dispatch), mem::transmute(_fn))}
+        // NOTE: this generates a memory leak.
+        let boxed = Box::new(ffi::CString::new(signature).unwrap());
+        
+        unsafe {
+            // move the value outside the rust memory management model
+            let c_sig: *const ffi::CString = mem::transmute(boxed);
+
+            // use
+            sass_sys::sass_make_function((&*c_sig).as_ptr(), Some(dispatch), mem::transmute(_fn))
+        }
     }
 
     /// Build a SassFunctionCallback.
