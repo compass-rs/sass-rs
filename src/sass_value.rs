@@ -127,18 +127,18 @@ impl fmt::Display for SassValue {
                 sass_sys::SASS_BOOLEAN => {
                     let v = unsafe{ sass_sys::sass_boolean_get_value(value) };
                     if v != 0 {
-                        String::from_str("true")
+                        "true".to_string()
                     } else {
-                        String::from_str("false")
+                        "false".to_string()
                     }
                 },
                 sass_sys::SASS_NUMBER => {
                     let v = unsafe { sass_sys::sass_number_get_value(value)};
                     format!("{}",v)
                 },
-                sass_sys::SASS_COLOR => {String::from_str("color(?,?,?,?)")},
-                sass_sys::SASS_MAP => {String::from_str("{?,?}")},
-                sass_sys::SASS_NULL => String::from_str("(null)"),
+                sass_sys::SASS_COLOR => {"color(?,?,?,?)".to_string()},
+                sass_sys::SASS_MAP => {"{?,?}".to_string()},
+                sass_sys::SASS_NULL => "(null)".to_string(),
                 sass_sys::SASS_ERROR => util::build_string(
                     unsafe {sass_sys::sass_error_get_message(value)}
                 ),

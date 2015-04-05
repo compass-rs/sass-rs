@@ -16,4 +16,5 @@ name = "sass_rs"
 path = "src/lib.rs"
 
 [dependencies]
-sass-sys = "0.0.8"
+sass-sys = "0"
+libc = "0"

@@ -5,7 +5,6 @@ use std::{ffi,ptr};
 use sass_sys;
 use sass_function::*;
 use util;
-use core::num::ToPrimitive;
 
 pub struct SassOptions {
     pub raw: *mut sass_sys::Struct_Sass_Options
@@ -15,11 +14,11 @@ impl SassOptions {
     /// Set the sass functions in the context so that they are available to libsass.
     pub fn set_sass_functions_from_callbacs(&mut self, sf:Vec<SassFunctionCallback>) {
         // create list of all custom functions
-        let len:u64 = sf.len().to_u64().unwrap();
+        let len = sf.len() as u64;
         unsafe {
             let fn_list = sass_sys::sass_make_function_list(len);
             for (i,item) in sf.iter().enumerate() {
-                sass_sys::sass_function_set_list_entry(fn_list, i.to_u64().unwrap(), item.c_callback);
+                sass_sys::sass_function_set_list_entry(fn_list, i as u64, item.c_callback);
             }
             sass_sys::sass_option_set_c_functions(self.raw, fn_list);
         }
@@ -29,12 +28,12 @@ impl SassOptions {
     /// of tuples, each tuple contains the signature and function pointer.
     pub fn set_sass_functions(&mut self, sf:Vec<(&'static str,SassFunction)>) {
         // create list of all custom functions
-        let len:u64 = sf.len().to_u64().unwrap();
+        let len = sf.len() as u64;
         unsafe {
             let fn_list = sass_sys::sass_make_function_list(len);
             for (i,item) in sf.iter().enumerate() {
                 let c_cb = SassFunctionCallback::make_sass_c_callback(item.0,item.1);
-                sass_sys::sass_function_set_list_entry(fn_list, i.to_u64().unwrap(), c_cb);
+                sass_sys::sass_function_set_list_entry(fn_list, i as u64, c_cb);
             }
             sass_sys::sass_option_set_c_functions(self.raw, fn_list);
         }
@@ -79,7 +78,7 @@ impl SassFileContext {
             if error_message != ptr::null() {
                 Result::Err(util::build_string(error_message))
             } else {
-                Result::Err(String::from_str("Unknown error"))
+                Result::Err("Unknown error".to_string())
             }
         } else {
             Result::Ok(util::build_string(output_string))

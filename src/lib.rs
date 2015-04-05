@@ -1,10 +1,8 @@
 #![crate_type = "lib"]
-#![feature(libc,collections,core)]
 
 
 
 extern crate sass_sys;
-extern crate core;
 extern crate libc;
 mod util;
 mod raw;
