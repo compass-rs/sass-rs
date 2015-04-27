@@ -15,7 +15,7 @@ use std::fmt;
 struct CustomFunctionCall {
     slot: usize,
     argument: SassValue,
-    reply: SyncSender<SassValue>
+    reply: Mutex<SyncSender<SassValue>>
 }
 
 impl fmt::Debug for CustomFunctionCall {
@@ -37,7 +37,7 @@ impl DispatchSlot {
         let message = CustomFunctionCall {
             slot: self.slot,
             argument: sass_value,
-            reply: tx
+            reply: Mutex::new(tx)
         };
         match self.sender.lock().map(|s| s.send(message)) {
             Ok(_) => {
@@ -55,7 +55,7 @@ impl DispatchSlot {
 
 
 /// Holds the data structures needed to dispatch calls from libsass
-/// back in the Rust code
+/// back in the Rust code.
 pub struct Dispatcher {
     providers: Vec<Box<SassFunction>>,
     receiver: Receiver<CustomFunctionCall>,
@@ -105,7 +105,7 @@ impl Dispatcher {
             Ok(message) => {
                 let _fn:&Box<SassFunction>  = &self.providers[message.slot];
                 let out = _fn.custom(&message.argument);
-                message.reply.send(out).map_err(|_| "dispatch reply error".to_string())
+                message.reply.lock().unwrap().send(out).map_err(|_| "dispatch reply error".to_string())
             },
             Err(_) => {
                 Err("dispatch recv error".to_string())
