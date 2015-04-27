@@ -3,50 +3,43 @@
 
 use std::{ffi,ptr};
 use sass_sys;
-use sass_function::*;
 use util;
+use ptr::Unique;
+use std::sync::{Arc,RwLock};
 
+
+
+#[derive(Debug)]
 pub struct SassOptions {
-    pub raw: *mut sass_sys::Struct_Sass_Options
+    pub raw: Unique<sass_sys::Struct_Sass_Options>
 }
 
 impl SassOptions {
-    /// Set the sass functions in the context so that they are available to libsass.
-    pub fn set_sass_functions_from_callbacs(&mut self, sf:Vec<SassFunctionCallback>) {
-        // create list of all custom functions
-        let len = sf.len() as u64;
-        unsafe {
-            let fn_list = sass_sys::sass_make_function_list(len);
-            for (i,item) in sf.iter().enumerate() {
-                sass_sys::sass_function_set_list_entry(fn_list, i as u64, item.c_callback);
-            }
-            sass_sys::sass_option_set_c_functions(self.raw, fn_list);
-        }
-    }
 
     /// Set the sass functions in the context, expects an array
     /// of tuples, each tuple contains the signature and function pointer.
-    pub fn set_sass_functions(&mut self, sf:Vec<(&'static str,SassFunction)>) {
+    pub fn set_sass_functions(&mut self, sf:Vec<sass_sys::Sass_C_Function_Callback>) {
         // create list of all custom functions
         let len = sf.len() as u64;
         unsafe {
             let fn_list = sass_sys::sass_make_function_list(len);
-            for (i,item) in sf.iter().enumerate() {
-                let c_cb = SassFunctionCallback::make_sass_c_callback(item.0,item.1);
-                sass_sys::sass_function_set_list_entry(fn_list, i as u64, c_cb);
+            for (i,sass_fn) in sf.into_iter().enumerate() {
+                sass_sys::sass_function_set_list_entry(fn_list, i as u64, sass_fn);
             }
-            sass_sys::sass_option_set_c_functions(self.raw, fn_list);
+            sass_sys::sass_option_set_c_functions(self.raw.get_mut(), fn_list);
         }
     }
 }
 
 pub struct SassContext {
-    pub raw: *mut sass_sys::Struct_Sass_Context,
-    pub sass_options: SassOptions
+    // Need Unique to send between threads, libsass is thread safe
+    pub raw: Unique<sass_sys::Struct_Sass_Context>,
+    pub sass_options: Arc<RwLock<SassOptions>>
 }
 
 pub struct SassFileContext {
-    context: *mut sass_sys::Struct_Sass_File_Context,
+    // Need Unique to send between threads, libsass is thread safe
+    context: Unique<sass_sys::Struct_Sass_File_Context>,
     pub sass_context: SassContext
 }
 
@@ -57,20 +50,21 @@ impl SassFileContext {
         let file_context = unsafe { sass_sys::sass_make_file_context(c_str.as_ptr()) };
         let file_sass_context = unsafe {sass_sys::sass_file_context_get_context(file_context)};
         let options = unsafe {sass_sys::sass_context_get_options(file_sass_context)};
+        let sass_options = Arc::new(RwLock::new(SassOptions {
+            raw: unsafe {Unique::new(options)}
+        }));
         SassFileContext {
-            context: file_context,
+            context: unsafe {Unique::new(file_context)},
             sass_context: SassContext {
-                raw: file_sass_context,
-                sass_options: SassOptions {
-                    raw: options
-                }
+                raw: unsafe {Unique::new(file_sass_context)},
+                sass_options: sass_options
             }
         }
     }
 
     pub fn compile(&mut self) -> Result<String,String> {
-        unsafe { sass_sys::sass_compile_file_context(self.context)};
-        let ctx_out = self.sass_context.raw;
+        unsafe { sass_sys::sass_compile_file_context(self.context.get_mut())};
+        let ctx_out = unsafe {self.sass_context.raw.get_mut()};
         let error_status = unsafe {sass_sys::sass_context_get_error_status(ctx_out)};
         let error_message = unsafe {sass_sys::sass_context_get_error_message(ctx_out)};
         let output_string = unsafe {sass_sys::sass_context_get_output_string(ctx_out)};
@@ -90,7 +84,7 @@ impl SassFileContext {
 impl Drop for SassFileContext {
     fn drop(&mut self) {
         unsafe {
-            sass_sys::sass_delete_file_context(self.context)
+            sass_sys::sass_delete_file_context(self.context.get_mut())
         }
     }
 }

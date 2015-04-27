@@ -7,6 +7,10 @@ extern crate libc;
 mod util;
 mod raw;
 
+// copied from libcore for Unique<>
+mod ptr;
+
+pub mod dispatcher;
 pub mod sass_context;
 pub mod sass_importer;
 pub mod sass_value;

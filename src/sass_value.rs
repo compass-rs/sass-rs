@@ -6,10 +6,11 @@ use std::ffi;
 use std::fmt;
 use util;
 use raw::SassValueRaw;
+use ptr::Unique;
 
 /// Wrap a raw sass value.
 pub struct SassValue {
-    raw: * mut SassValueRaw,
+    raw: Unique<SassValueRaw>,
     is_const: bool
 }
 
@@ -17,7 +18,7 @@ impl SassValue {
     // Wrap a read only Sass Value pointer coming from libsass.
     pub fn from_raw(raw: *const SassValueRaw) -> SassValue {
         SassValue {
-            raw: raw as *mut SassValueRaw,
+            raw: unsafe {Unique::new(raw as *mut SassValueRaw)},
             is_const: true
         }
     }
@@ -26,7 +27,7 @@ impl SassValue {
     pub fn sass_string(input:&str) -> SassValue {
         let c_str = ffi::CString::new(input).unwrap();
         SassValue {
-            raw: unsafe { sass_sys::sass_make_string(c_str.as_ptr()) },
+            raw: unsafe { Unique::new(sass_sys::sass_make_string(c_str.as_ptr())) },
             is_const: false
         }
     }
@@ -35,25 +36,25 @@ impl SassValue {
     pub fn sass_error(input:&str) -> SassValue {
         let c_str = ffi::CString::new(input).unwrap();
         SassValue {
-            raw: unsafe { sass_sys::sass_make_error(c_str.as_ptr()) },
+            raw: unsafe { Unique::new(sass_sys::sass_make_error(c_str.as_ptr())) },
             is_const: false
         }
     }
 
     /// return a mutable raw, if available.
-    pub fn as_raw(&self) -> Option<* mut SassValueRaw> {
+    pub fn as_raw(&mut self) -> Option<* mut SassValueRaw> {
         if self.is_const {
             None
         } else {
-            Some(self.raw)
+            Some(unsafe { self.raw.get_mut() })
         }
     }
 
 
     /// Attempt to extract a String from the raw value.
     pub fn to_string(&self) -> Option<String> {
-        if unsafe{sass_sys::sass_value_is_string(self.raw)} != 0 {
-            Some(util::build_string(unsafe{sass_sys::sass_string_get_value(self.raw)}))
+        if unsafe{sass_sys::sass_value_is_string(self.raw.get())} != 0 {
+            Some(util::build_string(unsafe{sass_sys::sass_string_get_value(self.raw.get())}))
         } else {
             None
         }
@@ -62,10 +63,10 @@ impl SassValue {
 
     /// Attempt to extract a vector of strings from the raw value.
     pub fn to_vec_string(&self) -> Option<Vec<String>> {
-        if unsafe{sass_sys::sass_value_is_list(self.raw)} != 0 {
+        if unsafe{sass_sys::sass_value_is_list(self.raw.get())} != 0 {
             let mut out = Vec::new();
-            for i in 0..unsafe{sass_sys::sass_list_get_length(self.raw)} {
-                let one = unsafe{sass_sys::sass_list_get_value(self.raw,i)};
+            for i in 0..unsafe{sass_sys::sass_list_get_length(self.raw.get())} {
+                let one = unsafe{sass_sys::sass_list_get_value(self.raw.get(),i)};
                 if unsafe{sass_sys::sass_value_is_string(one)} != 0 {
                     out.push(util::build_string(unsafe{sass_sys::sass_string_get_value(one)}));
                 }
@@ -79,11 +80,11 @@ impl SassValue {
     /// Expect the SassValue to be a list and to contain a string,
     /// at the desired index.
     pub fn list_nth_to_string(&self,index:usize) -> Option<String> {
-        if unsafe{sass_sys::sass_value_is_list(self.raw)} != 0 {
-            if index >= unsafe{sass_sys::sass_list_get_length(self.raw) as usize} {
+        if unsafe{sass_sys::sass_value_is_list(self.raw.get())} != 0 {
+            if index >= unsafe{sass_sys::sass_list_get_length(self.raw.get()) as usize} {
                 None
             } else {
-                let one = unsafe{sass_sys::sass_list_get_value(self.raw,index as u64)};
+                let one = unsafe{sass_sys::sass_list_get_value(self.raw.get(),index as u64)};
                 if unsafe{sass_sys::sass_value_is_string(one)} != 0 {
                     Some(util::build_string(unsafe{sass_sys::sass_string_get_value(one)}))
                 } else {
@@ -149,7 +150,7 @@ impl fmt::Display for SassValue {
             }
         }
 
-        fmt.pad_integral(true, "", &fmt_raw(self.raw))
+        fmt.pad_integral(true, "", &fmt_raw(unsafe{ self.raw.get()}))
 
     }
 }

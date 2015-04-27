@@ -4,18 +4,29 @@ extern crate sass_rs;
 use sass_rs::sass_context::SassFileContext;
 use sass_rs::sass_function::*;
 use sass_rs::sass_value::*;
+use sass_rs::dispatcher::Dispatcher;
+use std::thread;
 
 /// Function to be exported to libsass.
-fn foo(value:& SassValue) -> SassValue {
-    let out = format!("Called with {}", value);
-    SassValue::sass_string(&out)
+struct Foo;
+
+impl SassFunction for Foo {
+    fn custom(&self, value:& SassValue) -> SassValue {
+        let out = format!("Called with {}", value);
+        SassValue::sass_string(&out)
+    }
+
 }
 
 /// Setup the environment and compile a file.
 fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
-    let fns:Vec<(&'static str,SassFunction)> = vec![("foo($x)",foo)];
-    file_context.sass_context.sass_options.set_sass_functions(fns);
+    let foo = Foo;
+    let fns:Vec<(&'static str,Box<SassFunction>)> = vec![("foo($x)", Box::new(foo))];
+    let dispatcher = Dispatcher::build(fns,file_context.sass_context.sass_options.clone());
+    thread::spawn(move|| {
+        while {dispatcher.dispatch().is_ok()} {}
+    });
     let out = file_context.compile();
     match out {
         Ok(css) => println!("------- css  ------\n{}\n--------", css),

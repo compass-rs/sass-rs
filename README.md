@@ -31,3 +31,31 @@ body {
   content: foo-ed; }
 --------
 ```
+
+# C function interface
+
+
+There are two phases of the integration with libsass:
+
+1. register functions with libsass, these functions are implemented by providers
+
+2. dispatch to those functions
+
+
+## Providers
+
+The functions can be implemented by various Rust modules. These modules provide
+the function signature and the function implementation. Users should be able
+to add these modules without changing code parts of the library. The modules
+may need state and as such the interface with the dispatcher involves trait
+objects.
+
+In order to simplify the ownership structure the main function of your executable
+should provide a wrapping struct to contain all your data structure and the
+dispatcher. During the build process of this struct construct all your
+providers then pass a list of SassFunctions to the dispatcher.
+
+## Dispatching
+
+The dispatcher will create a single consumer FIFO queue to communicate with
+the C code. 
