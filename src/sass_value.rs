@@ -9,6 +9,7 @@ use raw::SassValueRaw;
 use ptr::Unique;
 
 /// Wrap a raw sass value.
+#[derive(Debug)]
 pub struct SassValue {
     raw: Unique<SassValueRaw>,
     is_const: bool

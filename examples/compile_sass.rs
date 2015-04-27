@@ -23,9 +23,10 @@ fn compile(filename:&str) {
     let mut file_context = SassFileContext::new(filename);
     let foo = Foo;
     let fns:Vec<(&'static str,Box<SassFunction>)> = vec![("foo($x)", Box::new(foo))];
-    let dispatcher = Dispatcher::build(fns,file_context.sass_context.sass_options.clone());
+    let options = file_context.sass_context.sass_options.clone();
+    let dispatcher = Dispatcher::build(fns,options);
     thread::spawn(move|| {
-        while {dispatcher.dispatch().is_ok()} {}
+        while dispatcher.dispatch().is_ok() {}
     });
     let out = file_context.compile();
     match out {

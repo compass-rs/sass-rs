@@ -6,7 +6,8 @@ use sass_value::SassValue;
 use sass_function::SassFunction;
 use sass_context::SassOptions;
 use std::sync::mpsc::{SyncSender,Receiver,sync_channel};
-use std::sync::{RwLock,Arc};
+use std::sync::{RwLock,Arc,Mutex};
+use std::fmt;
 
 
 
@@ -17,10 +18,16 @@ struct CustomFunctionCall {
     reply: SyncSender<SassValue>
 }
 
+impl fmt::Debug for CustomFunctionCall {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "CustomFunctionCall {{ slot: {}, argument: {}}}", self.slot, self.argument)
+    }
+}
+
 
 /// Struct used as the `cookie` to the C dispatch function.
 struct DispatchSlot {
-    sender: SyncSender<CustomFunctionCall>,
+    sender: Mutex<SyncSender<CustomFunctionCall>>,
     slot: usize
 }
 
@@ -32,7 +39,7 @@ impl DispatchSlot {
             argument: sass_value,
             reply: tx
         };
-        match self.sender.send(message) {
+        match self.sender.lock().map(|s| s.send(message)) {
             Ok(_) => {
                 match rx.recv() {
                     Ok(value) => value,
@@ -52,9 +59,17 @@ impl DispatchSlot {
 pub struct Dispatcher {
     providers: Vec<Box<SassFunction>>,
     receiver: Receiver<CustomFunctionCall>,
-    dispatch_slots: Vec<Box<DispatchSlot>>,
+    dispatch_slots: Vec<Arc<Box<DispatchSlot>>>,
     sass_options: Arc<RwLock<SassOptions>>
 }
+
+impl fmt::Debug for Dispatcher {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Dispatcher {{ providers len: {}, dispatch_slots len: {},  sass_options: {:p}}}",
+        self.providers.len(), self.dispatch_slots.len(), self.sass_options)
+    }
+}
+
 
 
 impl Dispatcher {
@@ -65,9 +80,9 @@ impl Dispatcher {
         let mut callbacks = Vec::new();
         let mut _slots = Vec::new();
         for (index,one) in registry.into_iter().enumerate() {
-            let slot = Box::new(DispatchSlot {sender:tx.clone(),slot:index});
+            let slot = Arc::new(Box::new(DispatchSlot {sender:Mutex::new(tx.clone()),slot:index}));
 
-            callbacks.push(Dispatcher::create_callback(one.0,&slot));
+            callbacks.push(Dispatcher::create_callback(one.0,slot.clone()));
             _providers.push(one.1);
             _slots.push(slot)
         }
@@ -92,12 +107,14 @@ impl Dispatcher {
                 let out = _fn.custom(&message.argument);
                 message.reply.send(out).map_err(|_| "dispatch reply error".to_string())
             },
-            Err(_) => Err("dispatch recv error".to_string())
+            Err(_) => {
+                Err("dispatch recv error".to_string())
+            }
         }
     }
 
 
-    fn create_callback( signature:&str,_fn:&Box<DispatchSlot>) -> sass_sys::Sass_C_Function_Callback {
+    fn create_callback( signature:&str,_fn:Arc<Box<DispatchSlot>>) -> sass_sys::Sass_C_Function_Callback {
         // NOTE: this generates a memory leak, store in Dispatcher.
         let boxed = Box::new(ffi::CString::new(signature).unwrap());
 
@@ -124,7 +141,7 @@ impl Drop for Dispatcher {
 /// Note that the SassFunctionCallback is not used directly in the dispatch.
 extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
                        cookie: *mut ::libc::c_void) -> *mut sass_sys::Union_Sass_Value {
-    let dispatch_slot:Box<DispatchSlot> = unsafe {mem::transmute(cookie)};
+    let dispatch_slot:Arc<Box<DispatchSlot>> = unsafe {mem::transmute(cookie)};
 
     match dispatch_slot.send(SassValue::from_raw(arg1)).as_raw() {
         Some(raw) => raw,
