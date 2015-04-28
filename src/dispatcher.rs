@@ -5,8 +5,8 @@ use std::mem;
 use sass_value::SassValue;
 use sass_function::SassFunction;
 use sass_context::SassOptions;
-use std::sync::mpsc::{SyncSender,Receiver,sync_channel};
-use std::sync::{RwLock,Arc,Mutex};
+use std::sync::mpsc::{Sender,Receiver,channel};
+use std::sync::{RwLock,Arc};
 use std::fmt;
 
 
@@ -15,7 +15,7 @@ use std::fmt;
 struct CustomFunctionCall {
     slot: usize,
     argument: SassValue,
-    reply: Mutex<SyncSender<SassValue>>
+    reply: Sender<SassValue>
 }
 
 impl fmt::Debug for CustomFunctionCall {
@@ -27,19 +27,19 @@ impl fmt::Debug for CustomFunctionCall {
 
 /// Struct used as the `cookie` to the C dispatch function.
 struct DispatchSlot {
-    sender: Mutex<SyncSender<CustomFunctionCall>>,
+    sender: Sender<CustomFunctionCall>,
     slot: usize
 }
 
 impl DispatchSlot {
     pub fn send(&self, sass_value:SassValue) -> SassValue {
-        let (tx,rx) = sync_channel::<SassValue>(0);
+        let (tx,rx) = channel::<SassValue>();
         let message = CustomFunctionCall {
             slot: self.slot,
             argument: sass_value,
-            reply: Mutex::new(tx)
+            reply: tx.clone()
         };
-        match self.sender.lock().map(|s| s.send(message)) {
+        match self.sender.send(message) {
             Ok(_) => {
                 match rx.recv() {
                     Ok(value) => value,
@@ -75,12 +75,12 @@ impl fmt::Debug for Dispatcher {
 impl Dispatcher {
 
     pub fn build(registry:Vec<(&'static str,Box<SassFunction>)>, sass_options:Arc<RwLock<SassOptions>>) -> Dispatcher {
-        let (tx,rx) = sync_channel::<CustomFunctionCall>(0);
+        let (tx,rx) = channel::<CustomFunctionCall>();
         let mut _providers = Vec::new();
         let mut callbacks = Vec::new();
         let mut _slots = Vec::new();
         for (index,one) in registry.into_iter().enumerate() {
-            let slot = Arc::new(Box::new(DispatchSlot {sender:Mutex::new(tx.clone()),slot:index}));
+            let slot = Arc::new(Box::new(DispatchSlot {sender:tx.clone(),slot:index}));
 
             callbacks.push(Dispatcher::create_callback(one.0,slot.clone()));
             _providers.push(one.1);
@@ -105,7 +105,7 @@ impl Dispatcher {
             Ok(message) => {
                 let _fn:&Box<SassFunction>  = &self.providers[message.slot];
                 let out = _fn.custom(&message.argument);
-                message.reply.lock().unwrap().send(out).map_err(|_| "dispatch reply error".to_string())
+                message.reply.send(out).map_err(|_| "dispatch reply error".to_string())
             },
             Err(_) => {
                 Err("dispatch recv error".to_string())
