@@ -18,6 +18,7 @@ struct CustomFunctionCall {
     reply: Sender<SassValue>
 }
 
+
 impl fmt::Debug for CustomFunctionCall {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "CustomFunctionCall {{ slot: {}, argument: {}}}", self.slot, self.argument)
@@ -59,7 +60,7 @@ impl DispatchSlot {
 pub struct Dispatcher {
     providers: Vec<Box<SassFunction>>,
     receiver: Receiver<CustomFunctionCall>,
-    dispatch_slots: Vec<Arc<Box<DispatchSlot>>>,
+    dispatch_slots: Vec<Arc<DispatchSlot>>,
     sass_options: Arc<RwLock<SassOptions>>
 }
 
@@ -80,7 +81,7 @@ impl Dispatcher {
         let mut callbacks = Vec::new();
         let mut _slots = Vec::new();
         for (index,one) in registry.into_iter().enumerate() {
-            let slot = Arc::new(Box::new(DispatchSlot {sender:tx.clone(),slot:index}));
+            let slot = Arc::new(DispatchSlot {sender:tx.clone(),slot:index});
 
             callbacks.push(Dispatcher::create_callback(one.0,slot.clone()));
             _providers.push(one.1);
@@ -114,7 +115,7 @@ impl Dispatcher {
     }
 
 
-    fn create_callback( signature:&str,_fn:Arc<Box<DispatchSlot>>) -> sass_sys::Sass_C_Function_Callback {
+    fn create_callback( signature:&str,_fn:Arc<DispatchSlot>) -> sass_sys::Sass_C_Function_Callback {
         // NOTE: this generates a memory leak, store in Dispatcher.
         let boxed = Box::new(ffi::CString::new(signature).unwrap());
 
@@ -141,7 +142,7 @@ impl Drop for Dispatcher {
 /// Note that the SassFunctionCallback is not used directly in the dispatch.
 extern "C" fn dispatch(arg1: *const sass_sys::Union_Sass_Value,
                        cookie: *mut ::libc::c_void) -> *mut sass_sys::Union_Sass_Value {
-    let dispatch_slot:Arc<Box<DispatchSlot>> = unsafe {mem::transmute(cookie)};
+    let dispatch_slot:Arc<DispatchSlot> = unsafe {mem::transmute(cookie)};
 
     match dispatch_slot.send(SassValue::from_raw(arg1)).as_raw() {
         Some(raw) => raw,
