@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Dispatcher","Holds the data structures needed to dispatch calls from libsass back in the Rust code."]]});

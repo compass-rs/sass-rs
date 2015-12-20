@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["SassFunction","Trait to be implemented by providers of custom sass functions."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SassImporter","Wrap a Sass Import Callback to control the lifecycle."]]});
