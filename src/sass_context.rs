@@ -20,11 +20,11 @@ impl SassOptions {
     /// of tuples, each tuple contains the signature and function pointer.
     pub fn set_sass_functions(&mut self, sf:Vec<sass_sys::Sass_C_Function_Callback>) {
         // create list of all custom functions
-        let len = sf.len() as u64;
+        let len = sf.len();
         unsafe {
             let fn_list = sass_sys::sass_make_function_list(len);
             for (i,sass_fn) in sf.into_iter().enumerate() {
-                sass_sys::sass_function_set_list_entry(fn_list, i as u64, sass_fn);
+                sass_sys::sass_function_set_list_entry(fn_list, i, sass_fn);
             }
             sass_sys::sass_option_set_c_functions(self.raw.get_mut(), fn_list);
         }

@@ -85,7 +85,7 @@ impl SassValue {
             if index >= unsafe{sass_sys::sass_list_get_length(self.raw.get()) as usize} {
                 None
             } else {
-                let one = unsafe{sass_sys::sass_list_get_value(self.raw.get(),index as u64)};
+                let one = unsafe{sass_sys::sass_list_get_value(self.raw.get(),index)};
                 if unsafe{sass_sys::sass_value_is_string(one)} != 0 {
                     Some(util::build_string(unsafe{sass_sys::sass_string_get_value(one)}))
                 } else {
