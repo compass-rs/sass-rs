@@ -8,6 +8,13 @@ use ptr::Unique;
 use std::sync::{Arc,RwLock};
 
 
+#[derive(Debug, Clone)]
+pub enum OutputStyle {
+    Nested,
+    Expanded,
+    Compact,
+    Compressed
+}
 
 #[derive(Debug)]
 pub struct SassOptions {
@@ -27,6 +34,18 @@ impl SassOptions {
                 sass_sys::sass_function_set_list_entry(fn_list, i, sass_fn);
             }
             sass_sys::sass_option_set_c_functions(self.raw.get_mut(), fn_list);
+        }
+    }
+
+    pub fn set_output_style(&mut self, style: OutputStyle) {
+        let style = match style {
+            OutputStyle::Nested => sass_sys::SASS_STYLE_NESTED,
+            OutputStyle::Expanded => sass_sys::SASS_STYLE_EXPANDED,
+            OutputStyle::Compact => sass_sys::SASS_STYLE_COMPACT,
+            OutputStyle::Compressed => sass_sys::SASS_STYLE_COMPRESSED,
+        };
+        unsafe {
+            sass_sys::sass_option_set_output_style(self.raw.get_mut(), style);
         }
     }
 }
