@@ -56,6 +56,56 @@ pub struct SassContext {
     pub sass_options: Arc<RwLock<SassOptions>>
 }
 
+pub struct SassDataContext {
+    // Need Unique to send between threads, libsass is thread safe
+    context: Unique<sass_sys::Struct_Sass_Data_Context>,
+    pub sass_context: SassContext
+}
+
+impl SassDataContext {
+    pub fn new(data:&str) -> SassDataContext {
+        let c_str = ffi::CString::new(data).unwrap();
+        let data_context = unsafe { sass_sys::sass_make_data_context(c_str.into_raw()) };
+        let data_sass_context = unsafe {sass_sys::sass_data_context_get_context(data_context)};
+        let options = unsafe {sass_sys::sass_context_get_options(data_sass_context)};
+        let sass_options = Arc::new(RwLock::new(SassOptions {
+            raw: unsafe {Unique::new(options)}
+        }));
+        SassDataContext {
+            context: unsafe {Unique::new(data_context)},
+            sass_context: SassContext {
+                raw: unsafe {Unique::new(data_sass_context)},
+                sass_options: sass_options
+            }
+        }
+    }
+
+    pub fn compile(&mut self) -> Result<String,String> {
+        unsafe { sass_sys::sass_compile_data_context(self.context.get_mut())};
+        let ctx_out = unsafe {self.sass_context.raw.get_mut()};
+        let error_status = unsafe {sass_sys::sass_context_get_error_status(ctx_out)};
+        let error_message = unsafe {sass_sys::sass_context_get_error_message(ctx_out)};
+        let output_string = unsafe {sass_sys::sass_context_get_output_string(ctx_out)};
+        if error_status != 0  {
+            if error_message != ptr::null() {
+                Result::Err(util::build_string(error_message))
+            } else {
+                Result::Err("Unknown error".to_string())
+            }
+        } else {
+            Result::Ok(util::build_string(output_string))
+        }
+    }
+}
+
+impl Drop for SassDataContext {
+    fn drop(&mut self) {
+        unsafe {
+            sass_sys::sass_delete_data_context(self.context.get_mut())
+        }
+    }
+}
+
 pub struct SassFileContext {
     // Need Unique to send between threads, libsass is thread safe
     context: Unique<sass_sys::Struct_Sass_File_Context>,
