@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `sass_sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, sass_sys">
+
+    <title>sass_sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'sass_sys', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>sass_sys</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/sass_sys/lib.rs.html#1-362' title='goto source code'>[src]</a></span></h1>
+<h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_C_Function_Descriptor.html'
+                                  title='sass_sys::Struct_Sass_C_Function_Descriptor'>Struct_Sass_C_Function_Descriptor</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_C_Import_Descriptor.html'
+                                  title='sass_sys::Struct_Sass_C_Import_Descriptor'>Struct_Sass_C_Import_Descriptor</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_Compiler.html'
+                                  title='sass_sys::Struct_Sass_Compiler'>Struct_Sass_Compiler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_Context.html'
+                                  title='sass_sys::Struct_Sass_Context'>Struct_Sass_Context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_Data_Context.html'
+                                  title='sass_sys::Struct_Sass_Data_Context'>Struct_Sass_Data_Context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_File_Context.html'
+                                  title='sass_sys::Struct_Sass_File_Context'>Struct_Sass_File_Context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_Import.html'
+                                  title='sass_sys::Struct_Sass_Import'>Struct_Sass_Import</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_Sass_Options.html'
+                                  title='sass_sys::Struct_Sass_Options'>Struct_Sass_Options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Union_Sass_Value.html'
+                                  title='sass_sys::Union_Sass_Value'>Union_Sass_Value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_BOOLEAN.html'
+                                  title='sass_sys::SASS_BOOLEAN'>SASS_BOOLEAN</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_COLOR.html'
+                                  title='sass_sys::SASS_COLOR'>SASS_COLOR</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_COMMA.html'
+                                  title='sass_sys::SASS_COMMA'>SASS_COMMA</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_ERROR.html'
+                                  title='sass_sys::SASS_ERROR'>SASS_ERROR</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_LIST.html'
+                                  title='sass_sys::SASS_LIST'>SASS_LIST</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_MAP.html'
+                                  title='sass_sys::SASS_MAP'>SASS_MAP</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_NULL.html'
+                                  title='sass_sys::SASS_NULL'>SASS_NULL</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_NUMBER.html'
+                                  title='sass_sys::SASS_NUMBER'>SASS_NUMBER</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_SPACE.html'
+                                  title='sass_sys::SASS_SPACE'>SASS_SPACE</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_STRING.html'
+                                  title='sass_sys::SASS_STRING'>SASS_STRING</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_STYLE_COMPACT.html'
+                                  title='sass_sys::SASS_STYLE_COMPACT'>SASS_STYLE_COMPACT</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_STYLE_COMPRESSED.html'
+                                  title='sass_sys::SASS_STYLE_COMPRESSED'>SASS_STYLE_COMPRESSED</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_STYLE_EXPANDED.html'
+                                  title='sass_sys::SASS_STYLE_EXPANDED'>SASS_STYLE_EXPANDED</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_STYLE_NESTED.html'
+                                  title='sass_sys::SASS_STYLE_NESTED'>SASS_STYLE_NESTED</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SASS_WARNING.html'
+                                  title='sass_sys::SASS_WARNING'>SASS_WARNING</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.libsass_version.html'
+                                  title='sass_sys::libsass_version'>libsass_version</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass2scss.html'
+                                  title='sass_sys::sass2scss'>sass2scss</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass2scss_version.html'
+                                  title='sass_sys::sass2scss_version'>sass2scss_version</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_boolean_get_value.html'
+                                  title='sass_sys::sass_boolean_get_value'>sass_boolean_get_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_boolean_set_value.html'
+                                  title='sass_sys::sass_boolean_set_value'>sass_boolean_set_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_clone_value.html'
+                                  title='sass_sys::sass_clone_value'>sass_clone_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_get_a.html'
+                                  title='sass_sys::sass_color_get_a'>sass_color_get_a</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_get_b.html'
+                                  title='sass_sys::sass_color_get_b'>sass_color_get_b</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_get_g.html'
+                                  title='sass_sys::sass_color_get_g'>sass_color_get_g</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_get_r.html'
+                                  title='sass_sys::sass_color_get_r'>sass_color_get_r</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_set_a.html'
+                                  title='sass_sys::sass_color_set_a'>sass_color_set_a</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_set_b.html'
+                                  title='sass_sys::sass_color_set_b'>sass_color_set_b</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_set_g.html'
+                                  title='sass_sys::sass_color_set_g'>sass_color_set_g</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_color_set_r.html'
+                                  title='sass_sys::sass_color_set_r'>sass_color_set_r</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_compile_data_context.html'
+                                  title='sass_sys::sass_compile_data_context'>sass_compile_data_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_compile_file_context.html'
+                                  title='sass_sys::sass_compile_file_context'>sass_compile_file_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_compiler_execute.html'
+                                  title='sass_sys::sass_compiler_execute'>sass_compiler_execute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_compiler_parse.html'
+                                  title='sass_sys::sass_compiler_parse'>sass_compiler_parse</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_column.html'
+                                  title='sass_sys::sass_context_get_error_column'>sass_context_get_error_column</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_file.html'
+                                  title='sass_sys::sass_context_get_error_file'>sass_context_get_error_file</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_json.html'
+                                  title='sass_sys::sass_context_get_error_json'>sass_context_get_error_json</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_line.html'
+                                  title='sass_sys::sass_context_get_error_line'>sass_context_get_error_line</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_message.html'
+                                  title='sass_sys::sass_context_get_error_message'>sass_context_get_error_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_error_status.html'
+                                  title='sass_sys::sass_context_get_error_status'>sass_context_get_error_status</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_included_files.html'
+                                  title='sass_sys::sass_context_get_included_files'>sass_context_get_included_files</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_options.html'
+                                  title='sass_sys::sass_context_get_options'>sass_context_get_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_output_string.html'
+                                  title='sass_sys::sass_context_get_output_string'>sass_context_get_output_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_get_source_map_string.html'
+                                  title='sass_sys::sass_context_get_source_map_string'>sass_context_get_source_map_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_take_error_file.html'
+                                  title='sass_sys::sass_context_take_error_file'>sass_context_take_error_file</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_take_error_json.html'
+                                  title='sass_sys::sass_context_take_error_json'>sass_context_take_error_json</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_take_error_message.html'
+                                  title='sass_sys::sass_context_take_error_message'>sass_context_take_error_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_take_output_string.html'
+                                  title='sass_sys::sass_context_take_output_string'>sass_context_take_output_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_context_take_source_map_string.html'
+                                  title='sass_sys::sass_context_take_source_map_string'>sass_context_take_source_map_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_data_context_get_context.html'
+                                  title='sass_sys::sass_data_context_get_context'>sass_data_context_get_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_data_context_get_options.html'
+                                  title='sass_sys::sass_data_context_get_options'>sass_data_context_get_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_data_context_set_options.html'
+                                  title='sass_sys::sass_data_context_set_options'>sass_data_context_set_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_compiler.html'
+                                  title='sass_sys::sass_delete_compiler'>sass_delete_compiler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_data_context.html'
+                                  title='sass_sys::sass_delete_data_context'>sass_delete_data_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_file_context.html'
+                                  title='sass_sys::sass_delete_file_context'>sass_delete_file_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_import.html'
+                                  title='sass_sys::sass_delete_import'>sass_delete_import</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_import_list.html'
+                                  title='sass_sys::sass_delete_import_list'>sass_delete_import_list</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_importer.html'
+                                  title='sass_sys::sass_delete_importer'>sass_delete_importer</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_delete_value.html'
+                                  title='sass_sys::sass_delete_value'>sass_delete_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_error_get_message.html'
+                                  title='sass_sys::sass_error_get_message'>sass_error_get_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_error_set_message.html'
+                                  title='sass_sys::sass_error_set_message'>sass_error_set_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_file_context_get_context.html'
+                                  title='sass_sys::sass_file_context_get_context'>sass_file_context_get_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_file_context_get_options.html'
+                                  title='sass_sys::sass_file_context_get_options'>sass_file_context_get_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_file_context_set_options.html'
+                                  title='sass_sys::sass_file_context_set_options'>sass_file_context_set_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_function_get_cookie.html'
+                                  title='sass_sys::sass_function_get_cookie'>sass_function_get_cookie</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_function_get_function.html'
+                                  title='sass_sys::sass_function_get_function'>sass_function_get_function</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_function_get_list_entry.html'
+                                  title='sass_sys::sass_function_get_list_entry'>sass_function_get_list_entry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_function_get_signature.html'
+                                  title='sass_sys::sass_function_get_signature'>sass_function_get_signature</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_function_set_list_entry.html'
+                                  title='sass_sys::sass_function_set_list_entry'>sass_function_set_list_entry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_base.html'
+                                  title='sass_sys::sass_import_get_base'>sass_import_get_base</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_cookie.html'
+                                  title='sass_sys::sass_import_get_cookie'>sass_import_get_cookie</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_function.html'
+                                  title='sass_sys::sass_import_get_function'>sass_import_get_function</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_list_entry.html'
+                                  title='sass_sys::sass_import_get_list_entry'>sass_import_get_list_entry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_path.html'
+                                  title='sass_sys::sass_import_get_path'>sass_import_get_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_source.html'
+                                  title='sass_sys::sass_import_get_source'>sass_import_get_source</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_get_srcmap.html'
+                                  title='sass_sys::sass_import_get_srcmap'>sass_import_get_srcmap</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_set_list_entry.html'
+                                  title='sass_sys::sass_import_set_list_entry'>sass_import_set_list_entry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_take_source.html'
+                                  title='sass_sys::sass_import_take_source'>sass_import_take_source</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_import_take_srcmap.html'
+                                  title='sass_sys::sass_import_take_srcmap'>sass_import_take_srcmap</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_list_get_length.html'
+                                  title='sass_sys::sass_list_get_length'>sass_list_get_length</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_list_get_separator.html'
+                                  title='sass_sys::sass_list_get_separator'>sass_list_get_separator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_list_get_value.html'
+                                  title='sass_sys::sass_list_get_value'>sass_list_get_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_list_set_separator.html'
+                                  title='sass_sys::sass_list_set_separator'>sass_list_set_separator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_list_set_value.html'
+                                  title='sass_sys::sass_list_set_value'>sass_list_set_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_boolean.html'
+                                  title='sass_sys::sass_make_boolean'>sass_make_boolean</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_color.html'
+                                  title='sass_sys::sass_make_color'>sass_make_color</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_data_compiler.html'
+                                  title='sass_sys::sass_make_data_compiler'>sass_make_data_compiler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_data_context.html'
+                                  title='sass_sys::sass_make_data_context'>sass_make_data_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_error.html'
+                                  title='sass_sys::sass_make_error'>sass_make_error</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_file_compiler.html'
+                                  title='sass_sys::sass_make_file_compiler'>sass_make_file_compiler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_file_context.html'
+                                  title='sass_sys::sass_make_file_context'>sass_make_file_context</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_function.html'
+                                  title='sass_sys::sass_make_function'>sass_make_function</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_function_list.html'
+                                  title='sass_sys::sass_make_function_list'>sass_make_function_list</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_import.html'
+                                  title='sass_sys::sass_make_import'>sass_make_import</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_import_entry.html'
+                                  title='sass_sys::sass_make_import_entry'>sass_make_import_entry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_import_list.html'
+                                  title='sass_sys::sass_make_import_list'>sass_make_import_list</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_importer.html'
+                                  title='sass_sys::sass_make_importer'>sass_make_importer</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_list.html'
+                                  title='sass_sys::sass_make_list'>sass_make_list</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_map.html'
+                                  title='sass_sys::sass_make_map'>sass_make_map</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_null.html'
+                                  title='sass_sys::sass_make_null'>sass_make_null</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_number.html'
+                                  title='sass_sys::sass_make_number'>sass_make_number</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_options.html'
+                                  title='sass_sys::sass_make_options'>sass_make_options</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_string.html'
+                                  title='sass_sys::sass_make_string'>sass_make_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_make_warning.html'
+                                  title='sass_sys::sass_make_warning'>sass_make_warning</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_map_get_key.html'
+                                  title='sass_sys::sass_map_get_key'>sass_map_get_key</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_map_get_length.html'
+                                  title='sass_sys::sass_map_get_length'>sass_map_get_length</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_map_get_value.html'
+                                  title='sass_sys::sass_map_get_value'>sass_map_get_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_map_set_key.html'
+                                  title='sass_sys::sass_map_set_key'>sass_map_set_key</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_map_set_value.html'
+                                  title='sass_sys::sass_map_set_value'>sass_map_set_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_number_get_unit.html'
+                                  title='sass_sys::sass_number_get_unit'>sass_number_get_unit</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_number_get_value.html'
+                                  title='sass_sys::sass_number_get_value'>sass_number_get_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_number_set_unit.html'
+                                  title='sass_sys::sass_number_set_unit'>sass_number_set_unit</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_number_set_value.html'
+                                  title='sass_sys::sass_number_set_value'>sass_number_set_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_c_functions.html'
+                                  title='sass_sys::sass_option_get_c_functions'>sass_option_get_c_functions</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_image_path.html'
+                                  title='sass_sys::sass_option_get_image_path'>sass_option_get_image_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_importer.html'
+                                  title='sass_sys::sass_option_get_importer'>sass_option_get_importer</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_include_path.html'
+                                  title='sass_sys::sass_option_get_include_path'>sass_option_get_include_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_input_path.html'
+                                  title='sass_sys::sass_option_get_input_path'>sass_option_get_input_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_is_indented_syntax_src.html'
+                                  title='sass_sys::sass_option_get_is_indented_syntax_src'>sass_option_get_is_indented_syntax_src</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_omit_source_map_url.html'
+                                  title='sass_sys::sass_option_get_omit_source_map_url'>sass_option_get_omit_source_map_url</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_output_path.html'
+                                  title='sass_sys::sass_option_get_output_path'>sass_option_get_output_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_output_style.html'
+                                  title='sass_sys::sass_option_get_output_style'>sass_option_get_output_style</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_precision.html'
+                                  title='sass_sys::sass_option_get_precision'>sass_option_get_precision</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_source_comments.html'
+                                  title='sass_sys::sass_option_get_source_comments'>sass_option_get_source_comments</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_source_map_contents.html'
+                                  title='sass_sys::sass_option_get_source_map_contents'>sass_option_get_source_map_contents</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_source_map_embed.html'
+                                  title='sass_sys::sass_option_get_source_map_embed'>sass_option_get_source_map_embed</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_get_source_map_file.html'
+                                  title='sass_sys::sass_option_get_source_map_file'>sass_option_get_source_map_file</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_push_include_path.html'
+                                  title='sass_sys::sass_option_push_include_path'>sass_option_push_include_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_c_functions.html'
+                                  title='sass_sys::sass_option_set_c_functions'>sass_option_set_c_functions</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_image_path.html'
+                                  title='sass_sys::sass_option_set_image_path'>sass_option_set_image_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_importer.html'
+                                  title='sass_sys::sass_option_set_importer'>sass_option_set_importer</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_include_path.html'
+                                  title='sass_sys::sass_option_set_include_path'>sass_option_set_include_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_input_path.html'
+                                  title='sass_sys::sass_option_set_input_path'>sass_option_set_input_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_is_indented_syntax_src.html'
+                                  title='sass_sys::sass_option_set_is_indented_syntax_src'>sass_option_set_is_indented_syntax_src</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_omit_source_map_url.html'
+                                  title='sass_sys::sass_option_set_omit_source_map_url'>sass_option_set_omit_source_map_url</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_output_path.html'
+                                  title='sass_sys::sass_option_set_output_path'>sass_option_set_output_path</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_output_style.html'
+                                  title='sass_sys::sass_option_set_output_style'>sass_option_set_output_style</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_precision.html'
+                                  title='sass_sys::sass_option_set_precision'>sass_option_set_precision</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_source_comments.html'
+                                  title='sass_sys::sass_option_set_source_comments'>sass_option_set_source_comments</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_source_map_contents.html'
+                                  title='sass_sys::sass_option_set_source_map_contents'>sass_option_set_source_map_contents</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_source_map_embed.html'
+                                  title='sass_sys::sass_option_set_source_map_embed'>sass_option_set_source_map_embed</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_option_set_source_map_file.html'
+                                  title='sass_sys::sass_option_set_source_map_file'>sass_option_set_source_map_file</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_string_get_value.html'
+                                  title='sass_sys::sass_string_get_value'>sass_string_get_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_string_quote.html'
+                                  title='sass_sys::sass_string_quote'>sass_string_quote</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_string_set_value.html'
+                                  title='sass_sys::sass_string_set_value'>sass_string_set_value</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_string_unquote.html'
+                                  title='sass_sys::sass_string_unquote'>sass_string_unquote</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_get_tag.html'
+                                  title='sass_sys::sass_value_get_tag'>sass_value_get_tag</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_boolean.html'
+                                  title='sass_sys::sass_value_is_boolean'>sass_value_is_boolean</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_color.html'
+                                  title='sass_sys::sass_value_is_color'>sass_value_is_color</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_error.html'
+                                  title='sass_sys::sass_value_is_error'>sass_value_is_error</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_list.html'
+                                  title='sass_sys::sass_value_is_list'>sass_value_is_list</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_map.html'
+                                  title='sass_sys::sass_value_is_map'>sass_value_is_map</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_null.html'
+                                  title='sass_sys::sass_value_is_null'>sass_value_is_null</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_number.html'
+                                  title='sass_sys::sass_value_is_number'>sass_value_is_number</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_string.html'
+                                  title='sass_sys::sass_value_is_string'>sass_value_is_string</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_value_is_warning.html'
+                                  title='sass_sys::sass_value_is_warning'>sass_value_is_warning</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_warning_get_message.html'
+                                  title='sass_sys::sass_warning_get_message'>sass_warning_get_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.sass_warning_set_message.html'
+                                  title='sass_sys::sass_warning_set_message'>sass_warning_set_message</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Enum_Sass_Output_Style.html'
+                                  title='sass_sys::Enum_Sass_Output_Style'>Enum_Sass_Output_Style</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Enum_Sass_Separator.html'
+                                  title='sass_sys::Enum_Sass_Separator'>Enum_Sass_Separator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Enum_Sass_Tag.html'
+                                  title='sass_sys::Enum_Sass_Tag'>Enum_Sass_Tag</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Sass_C_Function.html'
+                                  title='sass_sys::Sass_C_Function'>Sass_C_Function</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Sass_C_Function_Callback.html'
+                                  title='sass_sys::Sass_C_Function_Callback'>Sass_C_Function_Callback</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Sass_C_Function_List.html'
+                                  title='sass_sys::Sass_C_Function_List'>Sass_C_Function_List</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Sass_C_Import_Callback.html'
+                                  title='sass_sys::Sass_C_Import_Callback'>Sass_C_Import_Callback</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Sass_C_Import_Fn.html'
+                                  title='sass_sys::Sass_C_Import_Fn'>Sass_C_Import_Fn</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.ptrdiff_t.html'
+                                  title='sass_sys::ptrdiff_t'>ptrdiff_t</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.size_t.html'
+                                  title='sass_sys::size_t'>size_t</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.wchar_t.html'
+                                  title='sass_sys::wchar_t'>wchar_t</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "sass_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

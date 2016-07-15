@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SassValue","Wrap a raw sass value."],["SassValueBuf","An owned SassValueBuf."]]});
