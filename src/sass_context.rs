@@ -6,6 +6,7 @@ use sass_sys;
 use util;
 use ptr::Unique;
 use std::sync::{Arc,RwLock};
+use std::path::PathBuf;
 
 
 #[derive(Debug, Clone)]
@@ -46,6 +47,13 @@ impl SassOptions {
         };
         unsafe {
             sass_sys::sass_option_set_output_style(self.raw.get_mut(), style);
+        }
+    }
+
+    pub fn set_include_path(&mut self, path: PathBuf) {
+        let c_str = ffi::CString::new(path.to_str().unwrap()).unwrap();
+        unsafe {
+            sass_sys::sass_option_set_include_path(self.raw.get_mut(), c_str.into_raw())
         }
     }
 }
