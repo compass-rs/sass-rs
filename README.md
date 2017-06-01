@@ -1,61 +1,37 @@
-Wrapper library for low level sass-sys
-https://github.com/compass-rs/sass-sys
+# sass-rs
 
-[Travis build status:] (https://travis-ci.org/compass-rs/sass-rs) ![Travis build status]
-(https://travis-ci.org/compass-rs/sass-rs.svg?branch=master)
+[![Travis build status: (https://travis-ci.org/compass-rs/sass-rs)]
 
-Documentation: http://compass-rs.github.io/sass-rs/
-
-This is work in progress. To test that it works run the examples
-
-```
-cargo run --example versions
-
-Running `target/examples/versions`
-libsass: 3.1.0-beta.2-2-g420d
-sass2scss: 1.0.3
-```
+TODO: update appveyor url
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/mup239rroe6wsndt?svg=true)](https://ci.appveyor.com/project/winding-lines/sass-srs)
 
 
-The example below expands sass variables and calls custom functions defined in Rust.
+[Api documentation on docs.rs](https://docs.rs/sass-rs)
 
-```
-cargo run --example compile_sass examples/simple.scss
 
-Running `target/examples/compile_sass examples/simple.scss`
-Compiling sass file: `examples/simple.scss`.
-------- css  ------
-body {
-  font: 100% Helvetica, sans-serif;
-  color: #333;
-  content: foo-ed; }
---------
+This crate is a wrapper around [libsass](https://github.com/sass/libsass), currently tracking
+[v3.4.5](https://github.com/sass/libsass/releases/tag/3.4.5).
+
+## How to use
+
+`sass-rs` exposes 2 functions that are self-explanatory:
+
+- `compile_file(path: &str, options: Options)`
+- `compile_string(content: &str, options: Options)`
+
+Most of the time, you should be able to use the `Options::default()` but you can change the
+output style that way for example:
+
+```rs
+use sass_rs::{Options, OutputStyle};
+
+let mut options = Options::default();
+options.output_style = OutputStyle::Compressed;
 ```
 
-# C function interface
+You can see an example in the `examples` directory, which can be ran with the following command: 
+`cargo run --example compile_sass examples/simple.scss`
 
-
-There are two phases of the integration with libsass:
-
-1. register functions with libsass, these functions are implemented by providers
-
-2. dispatch to those functions
-
-
-## Providers
-
-The functions can be implemented by various Rust modules. These modules provide
-the function signature and the function implementation. Users should be able
-to add these modules without changing code parts of the library. The modules
-may need state and as such the interface with the dispatcher involves trait
-objects.
-
-In order to simplify the ownership structure the main function of your executable
-should provide a wrapping struct to contain all your data structure and the
-dispatcher. During the build process of this struct construct all your
-providers then pass a list of SassFunctions to the dispatcher.
-
-## Dispatching
-
-The dispatcher will create a single consumer FIFO queue to communicate with
-the C code. 
+## Not supported yet
+[Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and 
+[functions](https://github.com/sass/libsass/blob/master/docs/api-function.md) are not supported yet.

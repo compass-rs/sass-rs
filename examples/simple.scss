@@ -6,3 +6,5 @@ body {
   color: $primary-color;
   content: foo(1px);
 }
+
+@import "imported";
