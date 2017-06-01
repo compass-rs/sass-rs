@@ -1,8 +1,7 @@
 Wrapper library for low level sass-sys
 https://github.com/compass-rs/sass-sys
 
-[Travis build status:] (https://travis-ci.org/compass-rs/sass-rs) ![Travis build status]
-(https://travis-ci.org/compass-rs/sass-rs.svg?branch=master)
+[![Travis build status: (https://travis-ci.org/compass-rs/sass-rs)]
 
 Documentation: http://compass-rs.github.io/sass-rs/
 

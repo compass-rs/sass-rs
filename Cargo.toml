@@ -13,8 +13,8 @@ documentation = "http://compass-rs.github.io/sass-rs/"
 
 [lib]
 name = "sass_rs"
-path = "src/lib.rs"
 
 [dependencies]
-sass-sys = "0"
+# sass-sys = { git = "https://github.com/compass-rs/sass-sys" }
+sass-sys = { path = ".//sass-sys" }
 libc = "0.2"
