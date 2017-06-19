@@ -1,10 +1,7 @@
 # sass-rs
 
-[![Travis build status: (https://travis-ci.org/compass-rs/sass-rs)]
-
-TODO: update appveyor url
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/mup239rroe6wsndt?svg=true)](https://ci.appveyor.com/project/winding-lines/sass-srs)
-
+[![Build status](https://travis-ci.org/compass-rs/sass-rs)]
+[![Windows build status](https://ci.appveyor.com/api/projects/status/j8enle2iod2nxtor/branch/master?svg=true)](https://ci.appveyor.com/project/Keats/sass-rs-rmnm5/branch/master)
 
 [Api documentation on docs.rs](https://docs.rs/sass-rs)
 
