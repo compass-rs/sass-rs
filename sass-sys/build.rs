@@ -79,5 +79,7 @@ fn main() {
         return;
     }
 
+    let _ = Command::new("git").args(&["submodule", "update", "--init"]).status();
+
     compile();
 }
