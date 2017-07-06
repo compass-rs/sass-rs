@@ -10,9 +10,7 @@
 // except according to those terms.
 
 
-
 use std::marker::{PhantomData, Send, Sized, Sync};
-
 
 
 /// A wrapper around a raw `*mut T` that indicates that the possessor
@@ -33,13 +31,13 @@ pub struct Unique<T: Sized> {
 /// reference is unaliased. Note that this aliasing invariant is
 /// unenforced by the type system; the abstraction using the
 /// `Unique` must enforce it.
-unsafe impl<T: Send + Sized> Send for Unique<T> { }
+unsafe impl<T: Send + Sized> Send for Unique<T> {}
 
 /// `Unique` pointers are `Sync` if `T` is `Sync` because the data they
 /// reference is unaliased. Note that this aliasing invariant is
 /// unenforced by the type system; the abstraction using the
 /// `Unique` must enforce it.
-unsafe impl<T: Sync + Sized> Sync for Unique<T> { }
+unsafe impl<T: Sync + Sized> Sync for Unique<T> {}
 
 impl<T: Sized> Unique<T> {
     /// Creates a new `Unique`.
@@ -58,13 +56,3 @@ impl<T: Sized> Unique<T> {
         &mut *self.pointer
     }
 }
-
-/*
-impl<T:Sized> Deref for Unique<T> {
-    type Target = *mut T;
-
-    #[inline]
-    fn deref<'a>(&'a self) -> &'a *mut T {
-        unsafe { mem::transmute(&*self.pointer) }
-    }
-}*/

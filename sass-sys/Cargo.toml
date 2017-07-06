@@ -1,0 +1,22 @@
+[package]
+
+name = "sass-sys"
+version = "0.3.0"
+authors = ["Marius Seritan <github@seritan.net>"]
+links = "sass"
+build = "build.rs"
+
+keywords = ["sass", "ffi"]
+description = "Low level binding for the Sass library"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/compass-rs/sass-rs.git"
+homepage = "https://github.com/compass-rs/sass-rs"
+
+[build-dependencies]
+pkg-config = "0.3"
+bindgen = "0.26"
+
+[dependencies]
+libc = "0.2"
+
