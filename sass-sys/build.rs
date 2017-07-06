@@ -10,7 +10,6 @@ use std::process::Command;
 #[allow(dead_code)]
 fn write_bindings() {
     let bindings = bindgen::Builder::default()
-        .no_unstable_rust()
         .header("libsass/include/sass.h")
         // https://github.com/servo/rust-bindgen/issues/550
         .hide_type("max_align_t")

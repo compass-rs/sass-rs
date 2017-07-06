@@ -43,11 +43,6 @@ extern "C" {
      -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn sass_resolve_file(path: *const ::std::os::raw::c_char,
-                             incs: *mut *const ::std::os::raw::c_char)
-     -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
     pub fn libsass_version() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -284,6 +279,16 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Sass_Env {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Sass_Callee {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Sass_Import {
     _unused: [u8; 0],
 }
@@ -307,6 +312,8 @@ pub struct Sass_Importer {
 pub struct Sass_Function {
     _unused: [u8; 0],
 }
+pub type Sass_Env_Frame = *mut Sass_Env;
+pub type Sass_Callee_Entry = *mut Sass_Callee;
 pub type Sass_Import_Entry = *mut Sass_Import;
 pub type Sass_Import_List = *mut *mut Sass_Import;
 pub type Sass_Importer_Entry = *mut Sass_Importer;
@@ -324,6 +331,13 @@ pub type Sass_Function_Fn =
                                                cb: Sass_Function_Entry,
                                                compiler: *mut Sass_Compiler)
                               -> *mut Sass_Value>;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum Sass_Callee_Type {
+    SASS_CALLEE_MIXIN = 0,
+    SASS_CALLEE_FUNCTION = 1,
+    SASS_CALLEE_C_FUNCTION = 2,
+}
 extern "C" {
     pub fn sass_make_importer_list(length: usize) -> Sass_Importer_List;
 }
@@ -334,6 +348,9 @@ extern "C" {
 extern "C" {
     pub fn sass_importer_set_list_entry(list: Sass_Importer_List, idx: usize,
                                         entry: Sass_Importer_Entry);
+}
+extern "C" {
+    pub fn sass_delete_importer_list(list: Sass_Importer_List);
 }
 extern "C" {
     pub fn sass_make_importer(importer: Sass_Importer_Fn, priority: f64,
@@ -385,6 +402,56 @@ extern "C" {
      -> Sass_Import_Entry;
 }
 extern "C" {
+    pub fn sass_callee_get_name(arg1: Sass_Callee_Entry)
+     -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn sass_callee_get_path(arg1: Sass_Callee_Entry)
+     -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn sass_callee_get_line(arg1: Sass_Callee_Entry) -> usize;
+}
+extern "C" {
+    pub fn sass_callee_get_column(arg1: Sass_Callee_Entry) -> usize;
+}
+extern "C" {
+    pub fn sass_callee_get_type(arg1: Sass_Callee_Entry) -> Sass_Callee_Type;
+}
+extern "C" {
+    pub fn sass_callee_get_env(arg1: Sass_Callee_Entry) -> Sass_Env_Frame;
+}
+extern "C" {
+    pub fn sass_env_get_lexical(arg1: Sass_Env_Frame,
+                                arg2: *const ::std::os::raw::c_char)
+     -> *mut Sass_Value;
+}
+extern "C" {
+    pub fn sass_env_set_lexical(arg1: Sass_Env_Frame,
+                                arg2: *const ::std::os::raw::c_char,
+                                arg3: *mut Sass_Value);
+}
+extern "C" {
+    pub fn sass_env_get_local(arg1: Sass_Env_Frame,
+                              arg2: *const ::std::os::raw::c_char)
+     -> *mut Sass_Value;
+}
+extern "C" {
+    pub fn sass_env_set_local(arg1: Sass_Env_Frame,
+                              arg2: *const ::std::os::raw::c_char,
+                              arg3: *mut Sass_Value);
+}
+extern "C" {
+    pub fn sass_env_get_global(arg1: Sass_Env_Frame,
+                               arg2: *const ::std::os::raw::c_char)
+     -> *mut Sass_Value;
+}
+extern "C" {
+    pub fn sass_env_set_global(arg1: Sass_Env_Frame,
+                               arg2: *const ::std::os::raw::c_char,
+                               arg3: *mut Sass_Value);
+}
+extern "C" {
     pub fn sass_import_get_imp_path(arg1: Sass_Import_Entry)
      -> *const ::std::os::raw::c_char;
 }
@@ -432,6 +499,12 @@ extern "C" {
                               cb: Sass_Function_Fn,
                               cookie: *mut ::std::os::raw::c_void)
      -> Sass_Function_Entry;
+}
+extern "C" {
+    pub fn sass_delete_function(entry: Sass_Function_Entry);
+}
+extern "C" {
+    pub fn sass_delete_function_list(list: Sass_Function_List);
 }
 extern "C" {
     pub fn sass_function_get_list_entry(list: Sass_Function_List, pos: usize)
@@ -599,14 +672,6 @@ extern "C" {
      -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn sass_option_get_plugin_path(options: *mut Sass_Options)
-     -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn sass_option_get_include_path(options: *mut Sass_Options)
-     -> *const ::std::os::raw::c_char;
-}
-extern "C" {
     pub fn sass_option_get_source_map_file(options: *mut Sass_Options)
      -> *const ::std::os::raw::c_char;
 }
@@ -752,6 +817,14 @@ extern "C" {
      -> *mut *mut ::std::os::raw::c_char;
 }
 extern "C" {
+    pub fn sass_option_get_include_path_size(options: *mut Sass_Options)
+     -> usize;
+}
+extern "C" {
+    pub fn sass_option_get_include_path(options: *mut Sass_Options, i: usize)
+     -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn sass_context_get_included_files_size(ctx: *mut Sass_Context)
      -> usize;
 }
@@ -808,12 +881,44 @@ extern "C" {
                                           idx: usize) -> Sass_Import_Entry;
 }
 extern "C" {
+    pub fn sass_compiler_get_callee_stack_size(compiler: *mut Sass_Compiler)
+     -> usize;
+}
+extern "C" {
+    pub fn sass_compiler_get_last_callee(compiler: *mut Sass_Compiler)
+     -> Sass_Callee_Entry;
+}
+extern "C" {
+    pub fn sass_compiler_get_callee_entry(compiler: *mut Sass_Compiler,
+                                          idx: usize) -> Sass_Callee_Entry;
+}
+extern "C" {
     pub fn sass_option_push_plugin_path(options: *mut Sass_Options,
                                         path: *const ::std::os::raw::c_char);
 }
 extern "C" {
     pub fn sass_option_push_include_path(options: *mut Sass_Options,
                                          path: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn sass_find_file(path: *const ::std::os::raw::c_char,
+                          opt: *mut Sass_Options)
+     -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn sass_find_include(path: *const ::std::os::raw::c_char,
+                             opt: *mut Sass_Options)
+     -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn sass_compiler_find_file(path: *const ::std::os::raw::c_char,
+                                   compiler: *mut Sass_Compiler)
+     -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn sass_compiler_find_include(path: *const ::std::os::raw::c_char,
+                                      compiler: *mut Sass_Compiler)
+     -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn sass2scss(sass: *const ::std::os::raw::c_char,
