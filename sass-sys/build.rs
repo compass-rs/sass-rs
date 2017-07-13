@@ -1,4 +1,6 @@
 extern crate bindgen;
+#[cfg(target_env="msvc")]
+extern crate gcc;
 extern crate pkg_config;
 
 use std::env;
@@ -49,8 +51,13 @@ fn compile() {
 #[cfg(target_env="msvc")]
 fn compile() {
     let src = get_libsass_folder();
-    let r = Command::new("msbuild")
-        .args(&["win\\libsass.sln", "/p:LIBSASS_STATIC_LIB=1", "/p:Configuration=Release"])
+    let target = env::var("TARGET").expect("TARGET not found in environment");
+    let msvc_platform = if target.contains("x86_64") { "Win64" } else { "Win32" };
+    let r = gcc::windows_registry::find(target.as_str(),"msbuild.exe")
+        .expect("could not find msbuild")
+        .args(&["win\\libsass.sln", "/p:LIBSASS_STATIC_LIB=1", "/p:Configuration=Release",
+            "/p:WholeProgramOptimization=false",
+            format!("/p:Platform={}", msvc_platform).as_str()])
         .current_dir(&src)
         .output()
         .expect("error running msbuild");
@@ -63,7 +70,6 @@ fn compile() {
 
     println!("cargo:rustc-link-search=native={}", src.join("win").join("bin").display());
     println!("cargo:rustc-link-lib=static=libsass");
-    println!("cargo:rustc-link-lib=dylib=c++");
 }
 
 
