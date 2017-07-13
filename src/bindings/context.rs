@@ -3,6 +3,7 @@
 
 use std::ffi;
 use std::sync::{Arc, RwLock};
+use libc::strdup;
 
 use sass_sys;
 use bindings::util;
@@ -50,7 +51,7 @@ impl Context {
 
     pub fn new_data(data: &str) -> Context {
         let c_str = ffi::CString::new(data).unwrap();
-        let data_context = unsafe { sass_sys::sass_make_data_context(c_str.into_raw()) };
+        let data_context = unsafe { sass_sys::sass_make_data_context(strdup(c_str.as_ptr())) };
         let data_sass_context = unsafe { sass_sys::sass_data_context_get_context(data_context) };
         let sass_context = Context::make_sass_context(data_sass_context);
 
