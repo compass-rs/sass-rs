@@ -56,7 +56,6 @@ fn compile() {
     let r = gcc::windows_registry::find(target.as_str(),"msbuild.exe")
         .expect("could not find msbuild")
         .args(&["win\\libsass.sln", "/p:LIBSASS_STATIC_LIB=1", "/p:Configuration=Release",
-            "/p:WholeProgramOptimization=false",
             format!("/p:Platform={}", msvc_platform).as_str()])
         .current_dir(&src)
         .output()
@@ -69,7 +68,7 @@ fn compile() {
     }
 
     println!("cargo:rustc-link-search=native={}", src.join("win").join("bin").display());
-    println!("cargo:rustc-link-lib=static=libsass");
+    println!("cargo:rustc-link-lib=static-nobundle=libsass");
 }
 
 
