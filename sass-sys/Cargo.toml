@@ -1,7 +1,7 @@
 [package]
 
 name = "sass-sys"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Marius Seritan <github@seritan.net>"]
 links = "sass"
 build = "build.rs"
