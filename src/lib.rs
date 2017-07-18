@@ -5,7 +5,7 @@ mod bindings;
 mod options;
 // mod dispatcher;
 
-pub use options::Options;
+pub use options::{Options, OutputStyle};
 pub use bindings::Context;
 
 
@@ -25,12 +25,13 @@ pub fn compile_string(content: &str, options: Options) -> Result<String, String>
 
 #[cfg(test)]
 mod tests {
-    use super::{Options, compile_string};
+    use super::{Options, OutputStyle, compile_string};
 
     #[test]
     fn can_compile_some_valid_scss_input() {
         let input = "body { .hey { color: red; } }";
-        compile_string(input, Options::default()).is_ok();
+        assert_eq!(compile_string(input, Options::default()),
+            Ok("body .hey {\n  color: red; }\n".to_string()));
     }
 
     #[test]
@@ -38,5 +39,14 @@ mod tests {
         let input = "body { .hey { color: ; } }";
         let res = compile_string(input, Options::default());
         assert!(res.is_err());
+    }
+
+    #[test]
+    fn can_use_alternative_options() {
+        let input = "body { .hey { color: red; } }";
+        let mut opts = Options::default();
+        opts.output_style = OutputStyle::Compressed;
+        assert_eq!(compile_string(input, opts),
+            Ok("body .hey{color:red}\n".to_string()));
     }
 }
