@@ -8,10 +8,12 @@ mod options;
 pub use options::{Options, OutputStyle};
 pub use bindings::Context;
 
+use std::path::Path;
+
 
 /// Takes a file path and compiles it with the options given
-pub fn compile_file(path: &str, options: Options) -> Result<String, String> {
-    let mut context = Context::new_file(path);
+pub fn compile_file<P: AsRef<Path>>(path: P, options: Options) -> Result<String, String> {
+    let mut context = Context::new_file(path)?;
     context.set_options(options);
     context.compile()
 }
