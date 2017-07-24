@@ -3,6 +3,7 @@
 
 use std::ffi;
 use std::sync::{Arc, RwLock};
+use std::path::Path;
 use libc::strdup;
 
 use sass_sys;
@@ -61,16 +62,18 @@ impl Context {
         })
     }
 
-    pub fn new_file(path: &str) -> Context {
-        let c_str = ffi::CString::new(path).unwrap();
+    pub fn new_file<P: AsRef<Path>>(path: P) -> Result<Context, String> {
+        let c_str = ffi::CString::new(path.as_ref().to_str().ok_or(
+                "str conversation failed".to_string(),
+                )?).map_err(|e| format!("Failed to create CString: {}", e))?;
         let file_context = unsafe { sass_sys::sass_make_file_context(c_str.as_ptr()) };
         let file_sass_context = unsafe { sass_sys::sass_file_context_get_context(file_context) };
         let sass_context = Context::make_sass_context(file_sass_context);
 
-        Context::File(SassFileContext {
+        Ok(Context::File(SassFileContext {
             context: unsafe { Unique::new(file_context) },
             sass_context,
-        })
+        }))
     }
 
     pub fn set_options(&mut self, options: Options) {
