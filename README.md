@@ -14,7 +14,7 @@ This crate is a wrapper around [libsass](https://github.com/sass/libsass), curre
 `sass-rs` exposes 2 functions that are self-explanatory:
 
 - `compile_file(path: &str, options: Options)`
-- `compile_string(content: &str, options: Options)`
+- `compile_file<P: AsRef<Path>>(path: P, options: Options)`
 
 Most of the time, you should be able to use the `Options::default()` but you can change the
 output style that way for example:
