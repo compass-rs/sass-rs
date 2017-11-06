@@ -15,7 +15,7 @@ homepage = "https://github.com/compass-rs/sass-rs"
 
 [build-dependencies]
 pkg-config = "0.3"
-bindgen = "0.26"
+bindgen = "0.31"
 
 [dependencies]
 libc = "0.2"

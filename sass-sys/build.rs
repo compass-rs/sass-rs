@@ -13,8 +13,6 @@ use std::process::Command;
 fn write_bindings() {
     let bindings = bindgen::Builder::default()
         .header("libsass/include/sass.h")
-        // https://github.com/servo/rust-bindgen/issues/550
-        .hide_type("max_align_t")
         .generate()
         .expect("Unable to generate bindings");
 
