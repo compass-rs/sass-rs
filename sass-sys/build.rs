@@ -1,4 +1,4 @@
-extern crate bindgen;
+// extern crate bindgen;
 #[cfg(target_env="msvc")]
 extern crate gcc;
 extern crate pkg_config;
@@ -9,19 +9,19 @@ use std::process::Command;
 
 
 // Automatically write bindings to libsass
-#[allow(dead_code)]
-fn write_bindings() {
-    let bindings = bindgen::Builder::default()
-        .header("libsass/include/sass.h")
-        .generate()
-        .expect("Unable to generate bindings");
-
-    // Write the bindings to the $OUT_DIR/bindings.rs file.
-    let out_path = PathBuf::from("src");
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
-}
+//#[allow(dead_code)]
+//fn write_bindings() {
+//    let bindings = bindgen::Builder::default()
+//        .header("libsass/include/sass.h")
+//        .generate()
+//        .expect("Unable to generate bindings");
+//
+//    // Write the bindings to the $OUT_DIR/bindings.rs file.
+//    let out_path = PathBuf::from("src");
+//    bindings
+//        .write_to_file(out_path.join("bindings.rs"))
+//        .expect("Couldn't write bindings!");
+//}
 
 fn get_libsass_folder() -> PathBuf {
     env::current_dir().unwrap().join("libsass")
