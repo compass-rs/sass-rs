@@ -32,7 +32,10 @@ fn get_libsass_folder() -> PathBuf {
 fn compile() {
     let target = env::var("TARGET").expect("TARGET not found");
     let src = get_libsass_folder();
-    let r = Command::new("make").current_dir(&src).output().expect("error running make");
+    let is_bsd = target.contains("dragonfly") || target.contains("freebsd") ||
+        target.contains("netbsd") || target.contains("openbsd");
+    let r = Command::new(if is_bsd { "gmake" } else { "make" }).current_dir(&src).
+        output().expect("error running make");
 
     if !r.status.success() {
         let err = String::from_utf8_lossy(&r.stderr);
