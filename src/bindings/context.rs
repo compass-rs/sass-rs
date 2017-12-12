@@ -1,5 +1,5 @@
 //! Allow access to the various flavours of sass contexts:
-//! https://github.com/sass/libsass/wiki/API-Sass-Context
+//! <https://github.com/sass/libsass/wiki/API-Sass-Context>
 
 use std::ffi;
 use std::sync::{Arc, RwLock};
@@ -63,9 +63,9 @@ impl Context {
     }
 
     pub fn new_file<P: AsRef<Path>>(path: P) -> Result<Context, String> {
-        let c_str = ffi::CString::new(path.as_ref().to_str().ok_or(
-                "str conversation failed".to_string(),
-                )?).map_err(|e| format!("Failed to create CString: {}", e))?;
+        let c_str = ffi::CString::new(
+            path.as_ref().to_str().ok_or_else(|| "str conversation failed".to_string())?
+        ).map_err(|e| format!("Failed to create CString: {}", e))?;
         let file_context = unsafe { sass_sys::sass_make_file_context(c_str.as_ptr()) };
         let file_sass_context = unsafe { sass_sys::sass_file_context_get_context(file_context) };
         let sass_context = Context::make_sass_context(file_sass_context);

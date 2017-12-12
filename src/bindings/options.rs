@@ -13,20 +13,6 @@ pub struct SassOptions {
 }
 
 impl SassOptions {
-    /// Set the sass functions in the context, expects an array
-    /// of tuples, each tuple contains the signature and function pointer.
-//    pub fn set_sass_functions(&mut self, fns: Vec<sass_sys::Sass_C_Function_Callback>) {
-//        // create list of all custom functions
-//        let len = fns.len();
-//        unsafe {
-//            let fn_list = sass_sys::sass_make_function_list(len);
-//            for (i, sass_fn) in fns.into_iter().enumerate() {
-//                sass_sys::sass_function_set_list_entry(fn_list, i, sass_fn);
-//            }
-//            sass_sys::sass_option_set_c_functions(self.raw.get_mut(), fn_list);
-//        }
-//    }
-
     pub fn set_output_style(&mut self, style: OutputStyle) {
         let style = match style {
             OutputStyle::Nested => Sass_Output_Style::SASS_STYLE_NESTED,
@@ -59,9 +45,10 @@ impl SassOptions {
             paths.join(",")
         };
         let c_str = ffi::CString::new(include_path).unwrap();
-
+        let ptr = c_str.into_raw();
         unsafe {
-            sass_sys::sass_option_set_include_path(self.raw.get_mut(), c_str.into_raw())
+            sass_sys::sass_option_set_include_path(self.raw.get_mut(), ptr)
         }
+        let _ = ffi::CString::from_raw(ptr);
     }
 }
