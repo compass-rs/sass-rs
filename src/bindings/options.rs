@@ -42,7 +42,7 @@ impl SassOptions {
         let include_path = if cfg!(windows) {
             paths.join(";")
         } else {
-            paths.join(",")
+            paths.join(":")
         };
         let c_str = ffi::CString::new(include_path).unwrap();
         let ptr = c_str.into_raw();
