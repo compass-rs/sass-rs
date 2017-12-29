@@ -47,8 +47,8 @@ impl SassOptions {
         let c_str = ffi::CString::new(include_path).unwrap();
         let ptr = c_str.into_raw();
         unsafe {
-            sass_sys::sass_option_set_include_path(self.raw.get_mut(), ptr)
+            sass_sys::sass_option_set_include_path(self.raw.get_mut(), ptr);
+            let _ = ffi::CString::from_raw(ptr);
         }
-        let _ = ffi::CString::from_raw(ptr);
     }
 }
