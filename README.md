@@ -7,7 +7,7 @@
 
 
 This crate is a wrapper around [libsass](https://github.com/sass/libsass), currently tracking
-[v3.4.7](https://github.com/sass/libsass/releases/tag/3.4.7).
+[v3.5.0](https://github.com/sass/libsass/releases/tag/3.5.0).
 
 ## How to use
 
