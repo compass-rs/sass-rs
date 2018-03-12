@@ -1,8 +1,11 @@
 [package]
 
 name = "sass-sys"
-version = "0.4.3"
-authors = ["Marius Seritan <github@seritan.net>"]
+version = "0.4.4"
+authors = [
+    "Marius Seritan <github@seritan.net>",
+    "Vincent Prouillet <prouillet.vincent@gmail.com>"
+]
 links = "sass"
 build = "build.rs"
 
@@ -15,7 +18,7 @@ homepage = "https://github.com/compass-rs/sass-rs"
 
 [build-dependencies]
 pkg-config = "0.3"
-# bindgen = "0.31"
+# bindgen = "0.33"
 
 [dependencies]
 libc = "0.2"

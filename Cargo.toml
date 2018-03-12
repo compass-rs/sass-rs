@@ -1,7 +1,10 @@
 [package]
 name = "sass-rs"
 version = "0.2.1"
-authors = ["Marius Seritan <github@seritan.net>"]
+authors = [
+    "Marius Seritan <github@seritan.net>",
+    "Vincent Prouillet <prouillet.vincent@gmail.com>"
+]
 keywords = ["sass", "ffi"]
 description = "Higher level binding for the Sass library"
 license = "MIT"
@@ -13,6 +16,5 @@ homepage = "https://github.com/compass-rs/sass-rs"
 name = "sass_rs"
 
 [dependencies]
-# sass-sys = { path = "./sass-sys" }
-sass-sys = "0.4"
+sass-sys = { version = "0.4", path = "./sass-sys" }
 libc = "0.2"
