@@ -75,6 +75,22 @@ fn compile() {
     } else {
         "Win32"
     };
+    
+    let d = gcc::windows_registry::find(target.as_str(), "devenv.exe")
+        .expect("could not find devenv")
+        .args(&[
+            "/upgrade",
+            "win\\libsass.sln",
+        ])
+        .current_dir(&src)
+        .output()
+        .expect("error running devenv");
+    if !d.status.success() {
+        let err = String::from_utf8_lossy(&d.stderr);
+        let out = String::from_utf8_lossy(&d.stdout);
+        panic!("Build error:\nSTDERR:{}\nSTDOUT:{}", err, out);
+    }
+    
     let r = gcc::windows_registry::find(target.as_str(), "msbuild.exe")
         .expect("could not find msbuild")
         .args(&[
