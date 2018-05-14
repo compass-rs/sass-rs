@@ -76,6 +76,8 @@ fn compile() {
         "Win32"
     };
 
+    // Find an instance of devenv.exe from Visual Studio IDE in order to upgrade
+    // libsass.sln to the current available IDE. Do nothing if no devenv.exe found
     let d = gcc::windows_registry::find(target.as_str(), "devenv.exe");
     if let Some(mut d) = d {
         let d = d.args(&["/upgrade", "win\\libsass.sln"])
