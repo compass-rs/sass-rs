@@ -4,7 +4,7 @@ pub const true_: u32 = 1;
 pub const false_: u32 = 0;
 pub const __bool_true_false_are_defined: u32 = 1;
 pub const LIBSASS_VERSION: &'static [u8; 5usize] = b"[NA]\0";
-pub const LIBSASS_LANGUAGE_VERSION: &'static [u8; 4usize] = b"3.4\0";
+pub const LIBSASS_LANGUAGE_VERSION: &'static [u8; 4usize] = b"3.5\0";
 pub const SASS2SCSS_PRETTIFY_0: u32 = 0;
 pub const SASS2SCSS_PRETTIFY_1: u32 = 1;
 pub const SASS2SCSS_PRETTIFY_2: u32 = 2;
@@ -109,7 +109,7 @@ extern "C" {
     pub fn sass_make_color(r: f64, g: f64, b: f64, a: f64) -> *mut Sass_Value;
 }
 extern "C" {
-    pub fn sass_make_list(len: usize, sep: Sass_Separator) -> *mut Sass_Value;
+    pub fn sass_make_list(len: usize, sep: Sass_Separator, is_bracketed: bool) -> *mut Sass_Value;
 }
 extern "C" {
     pub fn sass_make_map(len: usize) -> *mut Sass_Value;
@@ -232,6 +232,12 @@ extern "C" {
 }
 extern "C" {
     pub fn sass_list_set_separator(v: *mut Sass_Value, value: Sass_Separator);
+}
+extern "C" {
+    pub fn sass_list_get_is_bracketed(v: *const Sass_Value) -> bool;
+}
+extern "C" {
+    pub fn sass_list_set_is_bracketed(v: *mut Sass_Value, value: bool);
 }
 extern "C" {
     pub fn sass_list_get_value(v: *const Sass_Value, i: usize) -> *mut Sass_Value;
@@ -872,6 +878,12 @@ extern "C" {
         compiler: *mut Sass_Compiler,
         idx: usize,
     ) -> Sass_Callee_Entry;
+}
+extern "C" {
+    pub fn sass_option_push_import_extension(
+        options: *mut Sass_Options,
+        ext: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn sass_option_push_plugin_path(

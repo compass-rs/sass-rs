@@ -120,7 +120,7 @@ fn compile() {
 fn main() {
     // Uncomment the line below to generate bindings. Doesn't work on CI as it
     // requires additional tooling
-    //    write_bindings();
+    // write_bindings();
 
     // Is it already built?
     if let Ok(_) = pkg_config::find_library("sass") {
