@@ -1,4 +1,4 @@
-os: Visual Studio 2013
+os: Visual Studio 2017
 
 environment:
   global:
@@ -7,11 +7,15 @@ environment:
   matrix:
       - TARGET: x86_64-pc-windows-msvc
         CHANNEL: stable
+        PLATFORM: x86_64
       - TARGET: i686-pc-windows-msvc
         CHANNEL: stable
+        PLATFORM: i686
 
 install:
   # Install Rust and Cargo
+  - if "%PLATFORM%" == "i686" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
+  - if "%PLATFORM%" == "x86_64" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
   - curl -sSf -o rustup-init.exe https://win.rustup.rs
   - rustup-init.exe --default-host %TARGET% --default-toolchain %CHANNEL% -y
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin

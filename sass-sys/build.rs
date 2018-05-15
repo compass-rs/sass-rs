@@ -75,6 +75,22 @@ fn compile() {
     } else {
         "Win32"
     };
+
+    // Find an instance of devenv.exe from Visual Studio IDE in order to upgrade
+    // libsass.sln to the current available IDE. Do nothing if no devenv.exe found
+    let d = gcc::windows_registry::find(target.as_str(), "devenv.exe");
+    if let Some(mut d) = d {
+        let d = d.args(&["/upgrade", "win\\libsass.sln"])
+            .current_dir(&src)
+            .output()
+            .expect("error running devenv");
+        if !d.status.success() {
+            let err = String::from_utf8_lossy(&d.stderr);
+            let out = String::from_utf8_lossy(&d.stdout);
+            println!("Upgrade error:\nSTDERR:{}\nSTDOUT:{}", err, out);
+        }
+    }
+
     let r = gcc::windows_registry::find(target.as_str(), "msbuild.exe")
         .expect("could not find msbuild")
         .args(&[
@@ -104,7 +120,7 @@ fn compile() {
 fn main() {
     // Uncomment the line below to generate bindings. Doesn't work on CI as it
     // requires additional tooling
-//    write_bindings();
+    //    write_bindings();
 
     // Is it already built?
     if let Ok(_) = pkg_config::find_library("sass") {
