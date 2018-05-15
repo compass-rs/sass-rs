@@ -7,7 +7,7 @@
 
 
 This crate is a wrapper around [libsass](https://github.com/sass/libsass), currently tracking
-[v3.5.2](https://github.com/sass/libsass/releases/tag/3.5.2).
+[v3.5.4](https://github.com/sass/libsass/releases/tag/3.5.4).
 
 ## How to use
 
@@ -26,9 +26,9 @@ let mut options = Options::default();
 options.output_style = OutputStyle::Compressed;
 ```
 
-You can see an example in the `examples` directory, which can be ran with the following command: 
+You can see an example in the `examples` directory, which can be ran with the following command:
 `cargo run --example compile_sass examples/simple.scss`
 
 ## Not supported yet
-[Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and 
+[Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and
 [functions](https://github.com/sass/libsass/blob/master/docs/api-function.md) are not supported yet.
