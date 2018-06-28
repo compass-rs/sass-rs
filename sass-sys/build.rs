@@ -1,6 +1,6 @@
 // extern crate bindgen;
 #[cfg(target_env = "msvc")]
-extern crate gcc;
+extern crate cc;
 extern crate pkg_config;
 
 use std::env;
@@ -37,8 +37,10 @@ fn get_libsass_folder() -> PathBuf {
 fn compile() {
     let target = env::var("TARGET").expect("TARGET not found");
     let src = get_libsass_folder();
-    let is_bsd = target.contains("dragonfly") || target.contains("freebsd")
-        || target.contains("netbsd") || target.contains("openbsd");
+    let is_bsd = target.contains("dragonfly")
+        || target.contains("freebsd")
+        || target.contains("netbsd")
+        || target.contains("openbsd");
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&src)
         .output()
@@ -78,9 +80,10 @@ fn compile() {
 
     // Find an instance of devenv.exe from Visual Studio IDE in order to upgrade
     // libsass.sln to the current available IDE. Do nothing if no devenv.exe found
-    let d = gcc::windows_registry::find(target.as_str(), "devenv.exe");
+    let d = cc::windows_registry::find(target.as_str(), "devenv.exe");
     if let Some(mut d) = d {
-        let d = d.args(&["/upgrade", "win\\libsass.sln"])
+        let d = d
+            .args(&["/upgrade", "win\\libsass.sln"])
             .current_dir(&src)
             .output()
             .expect("error running devenv");
@@ -91,7 +94,7 @@ fn compile() {
         }
     }
 
-    let r = gcc::windows_registry::find(target.as_str(), "msbuild.exe")
+    let r = cc::windows_registry::find(target.as_str(), "msbuild.exe")
         .expect("could not find msbuild")
         .args(&[
             "win\\libsass.sln",
