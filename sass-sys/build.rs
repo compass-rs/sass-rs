@@ -59,7 +59,7 @@ fn compile() {
     println!("cargo:rustc-link-lib=static=sass");
     println!(
         "cargo:rustc-link-lib=dylib={}",
-        if target.contains("darwin") {
+        if target.contains("darwin") || target.contains("freebsd") {
             "c++"
         } else {
             "stdc++"
