@@ -4,7 +4,8 @@ extern crate cc;
 extern crate pkg_config;
 
 use std::env;
-use std::path::PathBuf;
+use std::fs;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
 // Automatically write bindings to libsass
@@ -28,6 +29,27 @@ use std::process::Command;
 //        .expect("Couldn't write bindings!");
 //}
 
+macro_rules! t {
+    ($e:expr) => (match $e {
+        Ok(n) => n,
+        Err(e) => panic!("\n{} failed with {}\n", stringify!($e), e),
+    })
+}
+
+fn cp_r(dir: &Path, dest: &Path) {
+    for entry in t!(fs::read_dir(dir)) {
+        let entry = t!(entry);
+        let path = entry.path();
+        let dst = dest.join(path.file_name().unwrap());
+        if t!(fs::metadata(&path)).is_file() {
+            t!(fs::copy(path, dst));
+        } else {
+            t!(fs::create_dir_all(&dst));
+            cp_r(&path, &dst);
+        }
+    }
+}
+
 fn get_libsass_folder() -> PathBuf {
     env::current_dir().unwrap().join("libsass")
 }
@@ -37,12 +59,17 @@ fn get_libsass_folder() -> PathBuf {
 fn compile() {
     let target = env::var("TARGET").expect("TARGET not found");
     let src = get_libsass_folder();
+    let dest = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    let build = dest.join("build");
+    t!(fs::create_dir_all(&build));
+    cp_r(&src, &build);
     let is_bsd = target.contains("dragonfly")
         || target.contains("freebsd")
         || target.contains("netbsd")
         || target.contains("openbsd");
+
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
-        .current_dir(&src)
+        .current_dir(&build)
         .output()
         .expect("error running make");
 
@@ -54,12 +81,12 @@ fn compile() {
 
     println!(
         "cargo:rustc-link-search=native={}",
-        src.join("lib").display()
+        build.join("lib").display()
     );
     println!("cargo:rustc-link-lib=static=sass");
     println!(
         "cargo:rustc-link-lib=dylib={}",
-        if target.contains("darwin") || target.contains("freebsd") {
+        if target.contains("darwin") || is_bsd {
             "c++"
         } else {
             "stdc++"
@@ -77,6 +104,10 @@ fn compile() {
     } else {
         "Win32"
     };
+    let dest = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    let build = dest.join("build");
+    t!(fs::create_dir_all(&build));
+    cp_r(&src, &build);
 
     // Find an instance of devenv.exe from Visual Studio IDE in order to upgrade
     // libsass.sln to the current available IDE. Do nothing if no devenv.exe found
@@ -84,7 +115,7 @@ fn compile() {
     if let Some(mut d) = d {
         let d = d
             .args(&["/upgrade", "win\\libsass.sln"])
-            .current_dir(&src)
+            .current_dir(&build)
             .output()
             .expect("error running devenv");
         if !d.status.success() {
@@ -103,7 +134,7 @@ fn compile() {
             "/p:WholeProgramOptimization=false",
             format!("/p:Platform={}", msvc_platform).as_str(),
         ])
-        .current_dir(&src)
+        .current_dir(&build)
         .output()
         .expect("error running msbuild");
 
@@ -115,7 +146,7 @@ fn compile() {
 
     println!(
         "cargo:rustc-link-search=native={}",
-        src.join("win").join("bin").display()
+        build.join("win").join("bin").display()
     );
     println!("cargo:rustc-link-lib=static=libsass");
 }
@@ -127,14 +158,8 @@ fn main() {
 
     // Is it already built?
     if let Ok(_) = pkg_config::find_library("sass") {
-        println!("Sass lib already exists");
-        println!("or libsass? {:?}", pkg_config::find_library("libsass"));
         return;
     }
-
-    let _ = Command::new("git")
-        .args(&["submodule", "update", "--init"])
-        .status();
 
     compile();
 }
