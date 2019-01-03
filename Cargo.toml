@@ -5,12 +5,13 @@ authors = [
     "Marius Seritan <github@seritan.net>",
     "Vincent Prouillet <prouillet.vincent@gmail.com>"
 ]
-keywords = ["sass", "ffi"]
+keywords = ["sass", "scss", "ffi"]
 description = "Higher level binding for the Sass library"
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/compass-rs/sass-rs.git"
 homepage = "https://github.com/compass-rs/sass-rs"
+categories = ["web-programming", "development-tools::build-utils"]
 
 [lib]
 name = "sass_rs"
