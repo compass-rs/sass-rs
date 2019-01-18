@@ -1,4 +1,6 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
+/// See the [Sass docs](https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style) 
+/// for examples of how each style looks.
 pub enum OutputStyle {
     Nested,
     Expanded,
