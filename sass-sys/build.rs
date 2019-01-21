@@ -2,6 +2,7 @@
 #[cfg(target_env = "msvc")]
 extern crate cc;
 extern crate pkg_config;
+extern crate num_cpus;
 
 use std::env;
 use std::fs;
@@ -70,6 +71,7 @@ fn compile() {
 
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&build)
+        .args(&["--jobs", &num_cpus::get().to_string()])
         .output()
         .expect("error running make");
 
