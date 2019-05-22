@@ -13,6 +13,7 @@ To build this crate on Windows, you will need to have Visual Studio installed.
 
 You can control the number of CPU used to build `libsass` by setting the `MAKE_LIBSASS_JOBS` variable to the desired value. It defaults to the number of CPUs in the machine.
 
+## Binary
 This package also provides a small binary that can be `cargo install`ed to convert Sass files and print the output CSS.
 Example usage:
 
@@ -25,7 +26,7 @@ $ sass-rs --sass --compressed < source/style.sass
 $ sass-rs --sass --compressed < source/style.sass > build/style.css
 ```
 
-This is a small added feature, it isn't meant for fulfill every usecases. If you want to have something added to the binary, do a PR as I will not implement it myself.
+This is a small added feature that isn't meant to fulfill every usecases. If you want to have something added to the binary, do a PR as I will not implement it myself.
 
 ## Not supported yet
 [Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and
