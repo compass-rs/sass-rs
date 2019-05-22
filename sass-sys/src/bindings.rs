@@ -880,12 +880,6 @@ extern "C" {
     ) -> Sass_Callee_Entry;
 }
 extern "C" {
-    pub fn sass_option_push_import_extension(
-        options: *mut Sass_Options,
-        ext: *const ::std::os::raw::c_char,
-    );
-}
-extern "C" {
     pub fn sass_option_push_plugin_path(
         options: *mut Sass_Options,
         path: *const ::std::os::raw::c_char,

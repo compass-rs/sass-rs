@@ -13,6 +13,7 @@ To build this crate on Windows, you will need to have Visual Studio installed.
 
 You can control the number of CPU used to build `libsass` by setting the `MAKE_LIBSASS_JOBS` variable to the desired value. It defaults to the number of CPUs in the machine.
 
+## Binary
 This package also provides a small binary that can be `cargo install`ed to convert Sass files and print the output CSS.
 Example usage:
 
