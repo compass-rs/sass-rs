@@ -11,6 +11,8 @@ This crate is a wrapper around [libsass](https://github.com/sass/libsass), curre
 
 To build this crate on Windows, you will need to have Visual Studio installed.
 
+You can control the number of CPU used to build `libsass` by setting the `MAKE_LIBSASS_JOBS` variable to the desired value. It defaults to the number of CPUs in the machine.
+
 ## Not supported yet
 [Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and
 [functions](https://github.com/sass/libsass/blob/master/docs/api-function.md) are not supported yet.
