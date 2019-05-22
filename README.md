@@ -26,7 +26,7 @@ $ sass-rs --sass --compressed < source/style.sass
 $ sass-rs --sass --compressed < source/style.sass > build/style.css
 ```
 
-This is a small added feature, it isn't meant for fulfill every usecases. If you want to have something added to the binary, do a PR as I will not implement it myself.
+This is a small added feature that isn't meant to fulfill every usecases. If you want to have something added to the binary, do a PR as I will not implement it myself.
 
 ## Not supported yet
 [Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and
