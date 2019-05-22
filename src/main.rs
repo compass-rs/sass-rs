@@ -25,6 +25,11 @@ fn main() {
         opts.output_style = OutputStyle::Compressed;
     }
 
-    let sass = compile_string(buffer.as_str(), opts).unwrap();
-    println!("{}", sass);
+    match compile_string(buffer.as_str(), opts) {
+        Ok(sass) => println!("{}", sass),
+        Err(e) => {
+            println!("\nSASS/SCSS couldn't be converted bacause of the following error. Please check the input.\n");
+            eprintln!("{}", e);
+        }
+    }
 }
