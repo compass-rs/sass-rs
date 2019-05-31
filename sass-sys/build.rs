@@ -160,7 +160,7 @@ fn main() {
     // write_bindings();
 
     // Is it already built?
-    if let Ok(_) = pkg_config::find_library("sass") {
+    if let Ok(_) = pkg_config::find_library("libsass") {
         return;
     }
 
