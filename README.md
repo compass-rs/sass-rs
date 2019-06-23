@@ -31,3 +31,20 @@ This is a small added feature that isn't meant to fulfill every usecases. If you
 ## Not supported yet
 [Importers](https://github.com/sass/libsass/blob/master/docs/api-importer.md) and
 [functions](https://github.com/sass/libsass/blob/master/docs/api-function.md) are not supported yet.
+
+
+## Building (Windows)
+
+Windows compilation using VS 2019 requires that all the environment variables for MSBuild to be availble.
+
+An indicator that the environment is not properply setup is the following error message:
+
+```
+error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found. Confirm that the path in the <Import> declaration is correct, and that the file exists on disk.
+```
+
+If you find this error, you have a couple of of options to select:
+
+- [Easiest] Open the `Developer Command Prompt for VS 2019` application to compile the project. This terminal will setup all the needed environment variables to let it compile.
+- Setup the environment variables (eg: `PATH`, `LIB`) as [documented on Microsoft's website](https://docs.microsoft.com/en-us/cpp/build/setting-the-path-and-environment-variables-for-command-line-builds?view=vs-2019)
+- Install the complete setup of Visual Studio 2015 - not only the Visual C++ Build tools
