@@ -128,8 +128,18 @@ fn compile() {
         }
     }
 
-    let r = cc::windows_registry::find(target.as_str(), "msbuild.exe")
-        .expect("could not find msbuild")
+    let search = Command::new("which")
+        .args(&["msbuild.exe"])
+        .output()
+        .expect("Could not search for msbuild.exe on path");
+    let mut msbuild = if search.status.success() {
+        Command::new("msbuild.exe")
+    } else {
+        cc::windows_registry::find(target.as_str(), "msbuild.exe")
+            .expect("Could not find msbuild.exe on the registry")
+    };
+
+    let r = msbuild
         .args(&[
             "win\\libsass.sln",
             "/p:LIBSASS_STATIC_LIB=1",
