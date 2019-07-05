@@ -106,7 +106,7 @@ fn compile() {
         println!("cargo:rustc-link-lib=dylib=c++");
     }
     else if libprobe("stdc++") {
-        println!("cargo:rustc-link-lib=dylib=libc++");
+        println!("cargo:rustc-link-lib=dylib=stdc++");
     }
     else {
         panic!("no c++ library found");
