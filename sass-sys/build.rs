@@ -103,7 +103,7 @@ fn compile() {
     else if libprobe("c++") {
         println!("cargo:rustc-link-lib=dylib=c++");
     }
-    else if libprobe("libc++") {
+    else if libprobe("stdc++") {
         println!("cargo:rustc-link-lib=dylib=libc++");
     }
     else {
