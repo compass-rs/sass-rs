@@ -69,13 +69,15 @@ fn compile() {
         || target.contains("netbsd")
         || target.contains("openbsd");
     let libprobe = | lib: &str | -> bool {
-        Command::new("ld")
-            .arg("-o/dev/null")
-            .arg(format!("-l{}",lib))
-            .stderr(Stdio::null())
-            .status()
-            .expect("linker not found")
-            .success()
+      Command::new("gcc")
+        .arg("-xc++")
+        .arg("-o/dev/null")
+        .arg(format!("-l{}",lib))
+        .arg("-shared")
+        .stderr(Stdio::null())
+        .status()
+        .expect("")
+        .success()
     };
 
     let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or(num_cpus::get().to_string());
