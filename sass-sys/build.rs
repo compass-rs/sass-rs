@@ -69,7 +69,7 @@ fn compile() {
         || target.contains("netbsd")
         || target.contains("openbsd");
     let libprobe = | lib: &str | -> bool {
-      Command::new("gcc")
+      Command::new("cc")
         .arg("-xc++")
         .arg("-o/dev/null")
         .arg(format!("-l{}",lib))
