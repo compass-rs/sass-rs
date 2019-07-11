@@ -7,7 +7,7 @@ extern crate num_cpus;
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 // Automatically write bindings to libsass
 //#[allow(dead_code)]
@@ -68,6 +68,17 @@ fn compile() {
         || target.contains("freebsd")
         || target.contains("netbsd")
         || target.contains("openbsd");
+    let libprobe = | lib: &str | -> bool {
+      Command::new("cc")
+        .arg("-xc++")
+        .arg("-o/dev/null")
+        .arg(format!("-l{}",lib))
+        .arg("-shared")
+        .stderr(Stdio::null())
+        .status()
+        .expect("")
+        .success()
+    };
 
     let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or(num_cpus::get().to_string());
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
@@ -87,14 +98,20 @@ fn compile() {
         build.join("lib").display()
     );
     println!("cargo:rustc-link-lib=static=sass");
-    println!(
-        "cargo:rustc-link-lib=dylib={}",
-        if target.contains("darwin") || is_bsd {
-            "c++"
-        } else {
-            "stdc++"
-        }
-    );
+
+    if libprobe("c++_shared") {
+        println!("cargo:rustc-link-lib=dylib=c++_shared");
+    }
+    else if libprobe("c++") {
+        println!("cargo:rustc-link-lib=dylib=c++");
+    }
+    else if libprobe("stdc++") {
+        println!("cargo:rustc-link-lib=dylib=stdc++");
+    }
+    else {
+        panic!("no c++ library found");
+    }
+
 }
 
 // windows
