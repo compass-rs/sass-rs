@@ -37,7 +37,7 @@ This is a small added feature that isn't meant to fulfill every usecases. If you
 
 Windows compilation using VS 2019 requires that all the environment variables for MSBuild to be availble.
 
-An indicator that the environment is not properply setup is the following error message:
+An indicator that the environment is not properly setup is the following error message:
 
 ```
 error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found. Confirm that the path in the <Import> declaration is correct, and that the file exists on disk.
