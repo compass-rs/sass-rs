@@ -156,12 +156,15 @@ fn compile() {
             .expect("Could not find msbuild.exe on the registry")
     };
 
+    let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or(num_cpus::get().to_string());
+
     let r = msbuild
         .args(&[
             "win\\libsass.sln",
             "/p:LIBSASS_STATIC_LIB=1",
             "/p:Configuration=Release",
             "/p:WholeProgramOptimization=false",
+            format!("/m:{}", jobs).as_str(),
             format!("/p:Platform={}", msvc_platform).as_str(),
         ])
         .current_dir(&build)
