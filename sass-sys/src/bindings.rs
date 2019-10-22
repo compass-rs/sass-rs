@@ -22,6 +22,7 @@ pub enum Sass_Output_Style {
     SASS_STYLE_COMPRESSED = 3,
     SASS_STYLE_INSPECT = 4,
     SASS_STYLE_TO_SASS = 5,
+    SASS_STYLE_TO_CSS = 6,
 }
 extern "C" {
     pub fn sass_alloc_memory(size: usize) -> *mut ::std::os::raw::c_void;
