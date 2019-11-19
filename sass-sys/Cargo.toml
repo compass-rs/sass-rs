@@ -1,7 +1,7 @@
 [package]
 
 name = "sass-sys"
-version = "0.4.14"
+version = "0.4.15"
 authors = [
     "Marius Seritan <github@seritan.net>",
     "Vincent Prouillet <prouillet.vincent@gmail.com>"
@@ -15,6 +15,8 @@ license = "MIT"
 readme = "../README.md"
 repository = "https://github.com/compass-rs/sass-rs.git"
 homepage = "https://github.com/compass-rs/sass-rs"
+# https://github.com/NixOS/nixpkgs/issues/72972#issuecomment-554794824
+exclude = ["libsass/test/e2e/unicode-pwd"]
 
 [build-dependencies]
 pkg-config = "0.3"
