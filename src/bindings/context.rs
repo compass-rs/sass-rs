@@ -38,7 +38,7 @@ pub enum Context {
 
 
 impl Context {
-    fn make_sass_context(c_sass_context: *mut sass_sys::Sass_Context) -> SassContext {;
+    fn make_sass_context(c_sass_context: *mut sass_sys::Sass_Context) -> SassContext {
         let options = unsafe { sass_sys::sass_context_get_options(c_sass_context) };
         let sass_options = Arc::new(RwLock::new(SassOptions {
             raw: unsafe { Unique::new(options) }
