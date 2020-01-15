@@ -51,6 +51,24 @@ fn cp_r(dir: &Path, dest: &Path) {
     }
 }
 
+// CIs usually do it automatically but for normal users libsass would be missing
+fn init_submodule() {
+    Command::new("git")
+        .arg("submodule")
+        .arg("init")
+        .stderr(Stdio::null())
+        .status()
+        .expect("")
+        .success();
+    Command::new("git")
+        .arg("submodule")
+        .arg("update")
+        .stderr(Stdio::null())
+        .status()
+        .expect("")
+        .success();
+}
+
 fn get_libsass_folder() -> PathBuf {
     env::current_dir().unwrap().join("libsass")
 }
@@ -194,5 +212,6 @@ fn main() {
         return;
     }
 
+    init_submodule();
     compile();
 }
