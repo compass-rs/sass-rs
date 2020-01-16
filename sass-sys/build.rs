@@ -117,14 +117,13 @@ fn compile() {
     );
     println!("cargo:rustc-link-lib=static=sass");
 
-    if libprobe("c++_shared") {
+    if libprobe("stdc++") {
+        println!("cargo:rustc-link-lib=dylib=stdc++");
+    } else if libprobe("c++_shared") {
         println!("cargo:rustc-link-lib=dylib=c++_shared");
     }
     else if libprobe("c++") {
         println!("cargo:rustc-link-lib=dylib=c++");
-    }
-    else if libprobe("stdc++") {
-        println!("cargo:rustc-link-lib=dylib=stdc++");
     }
     else {
         panic!("no c++ library found");
