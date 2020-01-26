@@ -73,6 +73,33 @@ fn get_libsass_folder() -> PathBuf {
     env::current_dir().unwrap().join("libsass")
 }
 
+#[cfg(not(target_os = "macos"))]
+fn _compile(libprobe: fn(&str) -> bool) {
+    if libprobe("stdc++") {
+        println!("cargo:rustc-link-lib=dylib=stdc++");
+    } else if libprobe("c++_shared") {
+        println!("cargo:rustc-link-lib=dylib=c++_shared");
+    } else if libprobe("c++") {
+        println!("cargo:rustc-link-lib=dylib=c++");
+    } else {
+        panic!("no c++ library found");
+    }
+}
+
+#[cfg(target_os = "macos")]
+fn _compile(libprobe: fn(&str) -> bool) {
+
+    if libprobe("c++_shared") {
+        println!("cargo:rustc-link-lib=dylib=c++_shared");
+    } else if libprobe("c++") {
+        println!("cargo:rustc-link-lib=dylib=c++");
+    } else if libprobe("stdc++") {
+        println!("cargo:rustc-link-lib=dylib=stdc++");
+    } else {
+        panic!("no c++ library found");
+    }
+}
+
 // linux/unix
 #[cfg(not(target_env = "msvc"))]
 fn compile() {
@@ -86,18 +113,6 @@ fn compile() {
         || target.contains("freebsd")
         || target.contains("netbsd")
         || target.contains("openbsd");
-    let libprobe = | lib: &str | -> bool {
-      Command::new("cc")
-        .arg("-xc++")
-        .arg("-o/dev/null")
-        .arg(format!("-l{}",lib))
-        .arg("-shared")
-        .stderr(Stdio::null())
-        .status()
-        .expect("")
-        .success()
-    };
-
     let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or(num_cpus::get().to_string());
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&build)
@@ -117,19 +132,18 @@ fn compile() {
     );
     println!("cargo:rustc-link-lib=static=sass");
 
-    if libprobe("c++_shared") {
-        println!("cargo:rustc-link-lib=dylib=c++_shared");
-    }
-    else if libprobe("c++") {
-        println!("cargo:rustc-link-lib=dylib=c++");
-    }
-    else if libprobe("stdc++") {
-        println!("cargo:rustc-link-lib=dylib=stdc++");
-    }
-    else {
-        panic!("no c++ library found");
-    }
-
+    let libprobe = | lib: &str | -> bool {
+      Command::new("cc")
+        .arg("-xc++")
+        .arg("-o/dev/null")
+        .arg(format!("-l{}",lib))
+        .arg("-shared")
+        .stderr(Stdio::null())
+        .status()
+        .expect("")
+        .success()
+    };
+    _compile(libprobe);
 }
 
 // windows
