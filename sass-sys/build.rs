@@ -177,7 +177,7 @@ fn compile() {
         }
     }
 
-    let search = Command::new("which")
+    let search = Command::new("where")
         .args(&["msbuild.exe"])
         .output()
         .expect("Could not search for msbuild.exe on path");
