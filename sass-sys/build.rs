@@ -75,7 +75,9 @@ fn get_libsass_folder() -> PathBuf {
 
 #[cfg(not(target_os = "macos"))]
 fn _compile(libprobe: fn(&str) -> bool) {
-    if libprobe("stdc++") {
+    if cfg!(target_os = "freebsd") && libprobe("c++") {
+        println!("cargo:rustc-link-lib=dylib=c++");
+    } else if libprobe("stdc++") {
         println!("cargo:rustc-link-lib=dylib=stdc++");
     } else if libprobe("c++_shared") {
         println!("cargo:rustc-link-lib=dylib=c++_shared");
