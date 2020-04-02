@@ -73,11 +73,9 @@ fn get_libsass_folder() -> PathBuf {
     env::current_dir().unwrap().join("libsass")
 }
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "linux")]
 fn _compile(libprobe: fn(&str) -> bool) {
-    if cfg!(target_os = "freebsd") && libprobe("c++") {
-        println!("cargo:rustc-link-lib=dylib=c++");
-    } else if libprobe("stdc++") {
+    if libprobe("stdc++") {
         println!("cargo:rustc-link-lib=dylib=stdc++");
     } else if libprobe("c++_shared") {
         println!("cargo:rustc-link-lib=dylib=c++_shared");
@@ -88,9 +86,8 @@ fn _compile(libprobe: fn(&str) -> bool) {
     }
 }
 
-#[cfg(target_os = "macos")]
+#[cfg(not(target_os = "linux"))]
 fn _compile(libprobe: fn(&str) -> bool) {
-
     if libprobe("c++_shared") {
         println!("cargo:rustc-link-lib=dylib=c++_shared");
     } else if libprobe("c++") {
