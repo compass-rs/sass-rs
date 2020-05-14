@@ -7,7 +7,7 @@
 
 
 This crate is a wrapper around [libsass](https://github.com/sass/libsass), currently tracking
-[v3.6.3](https://github.com/sass/libsass/releases/tag/3.6.3).
+[v3.6.4](https://github.com/sass/libsass/releases/tag/3.6.4).
 
 To build this crate on Windows, you will need to have Visual Studio installed.
 
