@@ -207,5 +207,16 @@ fn main() {
         return;
     }
 
+    if !Path::new("libsass/.git").exists() {
+        let _ = Command::new("git")
+            .args(&["submodule", "update", "--init"])
+            .status();
+    }
+
+    // If it still doesn't exist, stop there
+    if !Path::new("libsass/.git").exists() {
+        return;
+    }
+
     compile();
 }
