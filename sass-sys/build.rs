@@ -51,24 +51,6 @@ fn cp_r(dir: &Path, dest: &Path) {
     }
 }
 
-// CIs usually do it automatically but for normal users libsass would be missing
-fn init_submodule() {
-    Command::new("git")
-        .arg("submodule")
-        .arg("init")
-        .stderr(Stdio::null())
-        .status()
-        .expect("Failed to run 'git submodule init'. Do you have git installed?")
-        .success();
-    Command::new("git")
-        .arg("submodule")
-        .arg("update")
-        .stderr(Stdio::null())
-        .status()
-        .expect("Failed to run 'git submodule update'. Do you have git installed?")
-        .success();
-}
-
 fn get_libsass_folder() -> PathBuf {
     env::current_dir().expect("Failed to get the current directory").join("libsass")
 }
@@ -225,6 +207,16 @@ fn main() {
         return;
     }
 
-    init_submodule();
+    if !Path::new("libsass/.git").exists() {
+        let _ = Command::new("git")
+            .args(&["submodule", "update", "--init"])
+            .status();
+    }
+
+    // If it still doesn't exist, stop there
+    if !Path::new("libsass/.git").exists() {
+        return;
+    }
+
     compile();
 }
