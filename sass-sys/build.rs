@@ -203,19 +203,16 @@ fn main() {
     // write_bindings();
 
     // Is it already built?
-    if let Ok(_) = pkg_config::find_library("libsass") {
+    if pkg_config::find_library("libsass").is_ok() {
         return;
     }
 
-    if !Path::new("libsass/.git").exists() {
-        let _ = Command::new("git")
-            .args(&["submodule", "update", "--init"])
-            .status();
-    }
-
-    // If it still doesn't exist, stop there
-    if !Path::new("libsass/.git").exists() {
-        return;
+    if !get_libsass_folder().join("Makefile").exists() {
+        eprintln!("
+            Could not find libsass source
+            Try running `git submodule update --init` if you are building from the repository
+        ");
+        std::process::exit(1);
     }
 
     compile();
