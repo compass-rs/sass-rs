@@ -177,6 +177,7 @@ fn compile() {
             "/p:LIBSASS_STATIC_LIB=1",
             "/p:Configuration=Release",
             "/p:WholeProgramOptimization=false",
+            "/p:UseMultiToolTask=true",
             format!("/m:{}", jobs).as_str(),
             format!("/p:Platform={}", msvc_platform).as_str(),
         ])
