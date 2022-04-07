@@ -2,9 +2,15 @@
 
 [![Build Status](https://travis-ci.org/compass-rs/sass-rs.svg?branch=master)](https://travis-ci.org/compass-rs/sass-rs)
 [![Windows build status](https://ci.appveyor.com/api/projects/status/j8enle2iod2nxtor/branch/master?svg=true)](https://ci.appveyor.com/project/Keats/sass-rs-rmnm5/branch/master)
+![Maintenance status](https://img.shields.io/maintenance/no/2021)
 
 [Api documentation on docs.rs](https://docs.rs/sass-rs)
 
+--
+
+**This crate is not maintained anymore as libsass is deprecated. Consider using <https://github.com/connorskees/grass> or <https://github.com/kaj/rsass> instead.**
+
+--
 
 This crate is a wrapper around [libsass](https://github.com/sass/libsass), currently tracking
 [v3.6.4](https://github.com/sass/libsass/releases/tag/3.6.4).
