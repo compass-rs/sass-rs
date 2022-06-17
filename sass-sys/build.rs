@@ -205,6 +205,18 @@ fn main() {
 
     // Is it already built?
     if pkg_config::find_library("libsass").is_ok() {
+
+        let r = Command::new("cc")
+            .arg("--print-search-dirs")
+            .output()
+            .expect("Failed to run cc. Do you have it installed?");
+        let out = String::from_utf8_lossy(&r.stdout);
+        println!(
+            "cargo:rustc-link-search=native={}",
+            out.split_whitespace().nth(1).unwrap_or(".")
+        );
+        println!("cargo:rustc-link-lib=static=stdc++");
+
         return;
     }
 
